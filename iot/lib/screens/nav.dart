@@ -11,7 +11,7 @@ class Nav extends StatefulWidget {
 }
 
 class _NavState extends State<Nav> {
-  int _currentIndex = 1;
+  int _currentIndex = 2;
 
   final tabs = [
     UserScreeen(),
@@ -41,7 +41,7 @@ class _NavState extends State<Nav> {
           ),
           BottomNavyBarItem(
             icon: Icon(Icons.add_to_home_screen),
-            title: Text('Sensor'),
+            title: Text('Follow'),
             activeColor: Colors.blueAccent,
             textAlign: TextAlign.center,
           ),

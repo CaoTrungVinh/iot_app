@@ -75,7 +75,7 @@ class _Ph_ChartState extends State<Ph_Chart> {
       SalesData(2019, 24),
       SalesData(2020, 18),
       SalesData(2021, 30),
-      SalesData(2022, 12),
+      SalesData(2022, 12.5),
       SalesData(2023, 24),
       SalesData(2024, 38),
       SalesData(2025, 30),

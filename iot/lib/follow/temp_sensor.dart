@@ -1,10 +1,10 @@
 import 'dart:async';
-
+import 'package:iot/chart_sensor/temp_chart_sensor.dart';
+import 'package:iot/network/get_data.dart';
+import 'package:iot/network/network.dart';
 import 'package:flutter/material.dart';
-import 'package:iot/model/temp_model.dart';
-import 'package:iot/network/request_temp.dart';
-import 'package:iot/warnings/temp_warning.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
+import 'package:dio/dio.dart';
 
 class Temp_Sensor extends StatefulWidget {
   const Temp_Sensor({Key key}) : super(key: key);
@@ -14,20 +14,18 @@ class Temp_Sensor extends StatefulWidget {
 }
 
 class _Temp_SensorState extends State<Temp_Sensor> {
-  Timer _timer;
-  List<Temp_Model> temp_data = List();
+  Dio dio = new Dio();
   bool isLoading = false;
+  double data;
+  Timer _timer;
 
-  void startTimerTemp() {
-    const oneSec = const Duration(seconds: 2);
-    _timer = new Timer.periodic(
-      oneSec,
-      (Timer timer) => setState(
-        () {
-          data_temp();
-        },
-      ),
-    );
+
+  void startTimer() {
+    _timer = new Timer.periodic(const Duration(seconds: 2), (timer) {
+      setState(() {
+        temp_data();
+      });
+    });
   }
 
   @override
@@ -38,26 +36,26 @@ class _Temp_SensorState extends State<Temp_Sensor> {
 
   @override
   void initState() {
-    startTimerTemp();
     super.initState();
+    startTimer();
   }
 
-  void data_temp() {
-    if (isLoading) return;
-    // print("data_temp");
+  Future<void> temp_data() async {
+    if (isLoading)
+      return;
     isLoading = true;
-    Request_Temp.fetchTemp().then(
-      (dataFromServer) {
-        if (dataFromServer == null) {
-          isLoading = false;
-          return;
-        }
-        setState(() {
-          temp_data = dataFromServer;
-        });
+    await getDataTempLast().then((value) {
+      if (value == null) {
         isLoading = false;
-      },
+        return;
+      }
+      setState(() {
+        data = double.tryParse(value.toString());
+      });
+      isLoading = false;
+    },
       onError: (err) {
+        // print(err);
         isLoading = false;
       },
     );
@@ -65,9 +63,11 @@ class _Temp_SensorState extends State<Temp_Sensor> {
 
   @override
   Widget build(BuildContext context) {
-    return temp_data.isEmpty
-        ? CircularProgressIndicator()
+    return data == null
+        ?
+    Container(child: Text(''),)
         : Container(
+      margin: EdgeInsets.fromLTRB(0.0, 15.0, 0.0, 0.0),
             decoration: BoxDecoration(
               borderRadius: const BorderRadius.all(const Radius.circular(15.0)),
               color: Colors.white,
@@ -83,7 +83,7 @@ class _Temp_SensorState extends State<Temp_Sensor> {
                     radius: 135.0,
                     lineWidth: 13.0,
                     animation: true,
-                    percent: double.tryParse('${temp_data.last.temp}') / 100,
+                    percent: data / 100,
                     center: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
@@ -95,7 +95,7 @@ class _Temp_SensorState extends State<Temp_Sensor> {
                               color: Colors.grey),
                         ),
                         new Text(
-                          '${temp_data.last.temp}',
+                          data.toString(),
                           style: new TextStyle(
                               fontWeight: FontWeight.bold, fontSize: 30.0),
                         ),
@@ -106,29 +106,18 @@ class _Temp_SensorState extends State<Temp_Sensor> {
                   ),
                 ),
                 Container(
-                  // margin: EdgeInsets.fromLTRB(0.0, 5.0, 0.0, 0.0),
-                  child: Row(
-                    children: [
-                      IconButton(
-                          icon: Icon(
-                            Icons.stacked_line_chart,
-                            color: Colors.blue,
-                          ),
-                          onPressed: () => {}),
-                      IconButton(
-                          icon: Icon(
-                            Icons.warning,
-                            color: Colors.blue,
-                          ),
-                          onPressed: () => {
-                                Navigator.of(context).push(
-                                  MaterialPageRoute(
-                                    builder: (context) =>
-                                        Temp_Warning(),
-                                  ),
-                                )
-                              }),
-                    ],
+                  child: FlatButton (
+                    child: Text("Chi tiết"),
+                    onPressed: () => {
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) =>
+                              test(),
+                        ),
+                      )
+                    },
+                    color: Colors.blue,
+                    textColor: Colors.white,
                   ),
                 )
               ],

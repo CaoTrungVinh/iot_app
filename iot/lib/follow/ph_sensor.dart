@@ -1,10 +1,14 @@
 import 'dart:async';
+import 'package:iot/network/get_data.dart';
+import 'package:iot/network/network.dart';
 import 'package:flutter/material.dart';
 import 'package:iot/model/ph_model.dart';
 import 'package:iot/network/request_ph.dart';
 import 'package:iot/warnings/ph_warning.dart';
 import 'package:syncfusion_flutter_gauges/gauges.dart';
 import 'package:iot/chart_sensor/ph_chart_sensor.dart';
+import 'dart:convert';
+import 'package:dio/dio.dart';
 
 class Ph_Sensor extends StatefulWidget {
   const Ph_Sensor({Key key}) : super(key: key);
@@ -14,20 +18,17 @@ class Ph_Sensor extends StatefulWidget {
 }
 
 class _Ph_SensorState extends State<Ph_Sensor> {
-  Timer _timer;
-  List<PH_Model> ph_data = List();
+  Dio dio = new Dio();
   bool isLoading = false;
+  double data;
+  Timer _timer;
 
-  void startTimerPh() {
-    const oneSec = const Duration(seconds: 2);
-    _timer = new Timer.periodic(
-      oneSec,
-      (Timer timer) => setState(
-        () {
-          data_ph();
-        },
-      ),
-    );
+  void startTimer() {
+    _timer = new Timer.periodic(const Duration(seconds: 2), (timer) {
+      setState(() {
+        ph_data();
+      });
+    });
   }
 
   @override
@@ -38,26 +39,26 @@ class _Ph_SensorState extends State<Ph_Sensor> {
 
   @override
   void initState() {
-    startTimerPh();
     super.initState();
+    startTimer();
   }
 
-  void data_ph() {
-    if (isLoading) return;
-    // print("data_ph");
+  Future<void> ph_data() async {
+    if (isLoading)
+      return;
     isLoading = true;
-    Request_Ph.fetchPh().then(
-      (dataFromServer) {
-        if (dataFromServer == null) {
-          isLoading = false;
-          return;
-        }
-        setState(() {
-          ph_data = dataFromServer;
-        });
+    await getDataPhLast().then((value) {
+      if (value == null) {
         isLoading = false;
-      },
+        return;
+      }
+      setState(() {
+        data = double.tryParse(value.toString());
+      });
+      isLoading = false;
+    },
       onError: (err) {
+        // print(err);
         isLoading = false;
       },
     );
@@ -65,9 +66,10 @@ class _Ph_SensorState extends State<Ph_Sensor> {
 
   @override
   Widget build(BuildContext context) {
-    return ph_data.isEmpty
-        ? CircularProgressIndicator()
+    return data == null
+        ? Container(child: Text(''),)
         : Container(
+      margin: EdgeInsets.fromLTRB(0.0, 15.0, 0.0, 0.0),
             width: 160.0,
             height: 210.0,
             decoration: BoxDecoration(
@@ -148,9 +150,7 @@ class _Ph_SensorState extends State<Ph_Sensor> {
                                 ],
                                 pointers: <GaugePointer>[
                                   NeedlePointer(
-                                      value: double.tryParse(
-                                          '${ph_data.last.value}'),
-                                      enableAnimation: true)
+                                      value: data, enableAnimation: true)
                                 ],
                                 annotations: <GaugeAnnotation>[
                                   // GaugeAnnotation(
@@ -170,9 +170,10 @@ class _Ph_SensorState extends State<Ph_Sensor> {
                         margin: EdgeInsets.fromLTRB(0.0, 130.0, 0.0, 0.0),
                         child: Center(
                           child: Text(
-                            "Độ Ph: " + '${ph_data.last.value}',
+                            "Độ Ph: " + data.toString(),
                             style: TextStyle(
-                                color: Colors.grey, fontWeight: FontWeight.bold),
+                                color: Colors.grey,
+                                fontWeight: FontWeight.bold),
                           ),
                         ),
                       ),
@@ -181,36 +182,18 @@ class _Ph_SensorState extends State<Ph_Sensor> {
                 ),
                 Container(
                   child: Center(
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        IconButton(
-                            icon: Icon(
-                              Icons.stacked_line_chart,
-                              color: Colors.blue,
-                            ),
-                            onPressed: () {
-                                  Navigator.of(context).push(
-                                    MaterialPageRoute(
-                                      builder: (context) => Ph_Chart_Screen(),
-                                    ),
-                                  );
-                                }),
-                        IconButton(
-                            icon: Icon(
-                              Icons.warning,
-                              color: Colors.blue,
-                            ),
-                            onPressed: (){
-                              Navigator.of(context).push(
-                                MaterialPageRoute(
-                                  builder: (context) =>
-                                      Ph_Warning(),
-                                ),
-                              );
-                            }),
-                      ],
+                    child: FlatButton (
+                      child: Text("Chi tiết"),
+                      onPressed: () => {
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (context) =>
+                                Ph_Chart_Screen(),
+                          ),
+                        )
+                      },
+                      color: Colors.blue,
+                      textColor: Colors.white,
                     ),
                   ),
                 ),

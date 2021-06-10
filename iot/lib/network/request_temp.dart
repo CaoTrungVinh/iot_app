@@ -4,7 +4,7 @@ import 'package:flutter/foundation.dart';
 import 'package:iot/model/temp_model.dart';
 
 class Request_Temp {
-  static const String url = 'http://192.168.43.156/iot/public/api/datatemp';
+  static const String url = 'http://192.168.1.144/iot/public/api/datatemp';
 
   static List<Temp_Model> parseTemp(String responseBody) {
     var list = json.decode(responseBody) as List<dynamic>;

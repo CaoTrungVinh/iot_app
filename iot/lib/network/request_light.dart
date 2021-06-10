@@ -4,7 +4,7 @@ import 'package:http/http.dart' as http;
 import 'package:flutter/foundation.dart';
 
 class Request_Light {
-  static const String url = 'http://192.168.43.156/iot/public/api/datalight';
+  static const String url = 'http://192.168.1.144/iot/public/api/datalight';
 
   static List<Light_Model> parseLight(String responseBody) {
     var list = json.decode(responseBody) as List<dynamic>;

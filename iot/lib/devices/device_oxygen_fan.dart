@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:iot/network/get_data.dart';
+import 'package:iot/network/post_data.dart';
+import 'package:iot/network/present_time.dart';
 
 class Device_Oxy extends StatefulWidget {
   const Device_Oxy({Key key}) : super(key: key);
@@ -8,21 +11,66 @@ class Device_Oxy extends StatefulWidget {
 }
 
 class _Device_OxyState extends State<Device_Oxy> {
+  bool isLoading = false;
+  int control;
+  String description = '';
+
   bool isSwitchedGraphic = false;
   var textValueGraphic = 'Switch is OFF';
 
+  @override
+  void initState() {
+    super.initState();
+    get_oxygen_fan_data();
+  }
+
+  Future<void> get_oxygen_fan_data() async {
+    if (isLoading)
+      return;
+    isLoading = true;
+    await get_oxygen_fan().then((value) {
+      if (value == null) {
+        isLoading = false;
+        return;
+      }
+      setState(() {
+        if (value == 1 || value == 2){
+          isSwitchedGraphic = true;
+        }else if (value == 0){
+          isSwitchedGraphic = false;
+        }
+      });
+      isLoading = false;
+    },
+      onError: (err) {
+        // print(err);
+        isLoading = false;
+      },
+    );
+  }
+
   void switchGraphic(bool value) {
     if(isSwitchedGraphic == false){
-      setState(() {
+      setState(()  {
         isSwitchedGraphic = true;
         textValueGraphic = 'Switch Button is ON';
+        control = 1;
+        description = 'Bật quạt oxy';
+        postOxygen_fan_On_Off(control, description, todayDate()).then((value) {
+          print(value);
+        });
       });
       print('Switch Button is ON');
     }
     else {
-      setState(() {
+      setState(()  {
         isSwitchedGraphic = false;
         textValueGraphic = 'Switch Button is OFF';
+        control = 0;
+        description = 'Tắt quạt oxy';
+        postOxygen_fan_On_Off(control, description, todayDate()).then((value) {
+          print(value);
+        });
       });
       print('Switch Button is OFF');
     }

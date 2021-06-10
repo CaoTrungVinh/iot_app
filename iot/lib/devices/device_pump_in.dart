@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:iot/timers/pumpIn_timer.dart';
+import 'package:iot/network/get_data.dart';
+import 'package:iot/network/post_data.dart';
+import 'package:iot/network/present_time.dart';
+import 'package:iot/timers/pump_in_timer.dart';
 
 class Device_PumpIn extends StatefulWidget {
   const Device_PumpIn({Key key}) : super(key: key);
@@ -9,20 +12,65 @@ class Device_PumpIn extends StatefulWidget {
 }
 
 class _Device_PumpInState extends State<Device_PumpIn> {
+  bool isLoading = false;
+
   bool isSwitchedBomIn = false;
+  int control;
+  String description = '';
   var textValueBomIn = 'Switch is OFF';
 
-  void switchBomIn(bool value) {
-    if (isSwitchedBomIn == false) {
+  @override
+  void initState() {
+    super.initState();
+    get_pump_in_data();
+  }
+
+  Future<void> get_pump_in_data() async {
+    if (isLoading)
+      return;
+    isLoading = true;
+    await getPumpIn().then((value) {
+      if (value == null) {
+        isLoading = false;
+        return;
+      }
       setState(() {
+        if (value == 1 || value == 2){
+          isSwitchedBomIn = true;
+        }else if (value == 0){
+          isSwitchedBomIn = false;
+        }
+      });
+      isLoading = false;
+    },
+      onError: (err) {
+        // print(err);
+        isLoading = false;
+      },
+    );
+  }
+
+  Future<void> switchBomIn(bool value)  {
+    if (isSwitchedBomIn == false) {
+      setState(()  {
         isSwitchedBomIn = true;
         textValueBomIn = 'Switch Button is ON';
+        control = 1;
+        description = 'Bơm nước vào hồ nuôi cá';
+         postPumpIn_On_Off(control, description, todayDate()).then((value) {
+          print(value);
+        });
       });
       print('Switch Button is ON');
     } else {
-      setState(() {
+      setState(()  {
         isSwitchedBomIn = false;
         textValueBomIn = 'Switch Button is OFF';
+        control = 0;
+        description = 'Tắt máy bơm';
+         postPumpIn_On_Off(control, description, todayDate()).then((value) {
+          print(value);
+        });
       });
       print('Switch Button is OFF');
     }
@@ -62,12 +110,13 @@ class _Device_PumpInState extends State<Device_PumpIn> {
               )),
           FlatButton(
             child: Text("Hẹn giờ"),
-            onPressed: () {
+            onPressed: () => {
               Navigator.of(context).push(
                 MaterialPageRoute(
-                  builder: (context) => PumpIn_Timer(),
+                  builder: (context) =>
+                      Pump_In_Timer(),
                 ),
-              );
+              )
             },
             color: Colors.blue,
             textColor: Colors.white,

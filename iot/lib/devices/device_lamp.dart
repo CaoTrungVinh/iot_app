@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:iot/network/get_data.dart';
+import 'package:iot/network/post_data.dart';
+import 'package:iot/network/present_time.dart';
 
 class Device_Light extends StatefulWidget {
   const Device_Light({Key key}) : super(key: key);
@@ -8,21 +11,66 @@ class Device_Light extends StatefulWidget {
 }
 
 class _Device_LightState extends State<Device_Light> {
-  bool isSwitchedLight = false;
-  var textValueLight = 'Switch is OFF';
+  bool isLoading = false;
+  int control;
+  String description = '';
 
-  void switchLight(bool value) {
-    if(isSwitchedLight == false){
+  bool isSwitchedLamp = false;
+  var textValueLamp = 'Switch is OFF';
+
+  @override
+  void initState() {
+    super.initState();
+    get_lamp_data();
+  }
+
+  Future<void> get_lamp_data() async {
+    if (isLoading)
+      return;
+    isLoading = true;
+    await getLamp().then((value) {
+      if (value == null) {
+        isLoading = false;
+        return;
+      }
       setState(() {
-        isSwitchedLight = true;
-        textValueLight = 'Switch Button is ON';
+        if (value == 1 || value == 2){
+          isSwitchedLamp = true;
+        }else if (value == 0){
+          isSwitchedLamp = false;
+        }
+      });
+      isLoading = false;
+    },
+      onError: (err) {
+        // print(err);
+        isLoading = false;
+      },
+    );
+  }
+
+  void switchLamp(bool value) {
+    if(isSwitchedLamp == false){
+      setState(()  {
+        isSwitchedLamp = true;
+        textValueLamp = 'Switch Button is ON';
+        control = 1;
+        description = 'Bật đèn';
+        postLamp_On_Off(control, description, todayDate()).then((value) {
+          print(value);
+        });
       });
       print('Switch Button is ON');
     }
     else {
-      setState(() {
-        isSwitchedLight = false;
-        textValueLight = 'Switch Button is OFF';
+      setState(()  {
+        isSwitchedLamp = false;
+        textValueLamp = 'Switch Button is OFF';
+        control = 0;
+        description = 'Tắt đèn';
+        postLamp_On_Off(control, description, todayDate()).then((value) {
+          print(value);
+        });
       });
       print('Switch Button is OFF');
     }
@@ -57,8 +105,8 @@ class _Device_LightState extends State<Device_Light> {
           Transform.scale(
               scale: 1.2,
               child: Switch(
-                onChanged: switchLight,
-                value: isSwitchedLight,
+                onChanged: switchLamp,
+                value: isSwitchedLamp,
                 activeColor: Colors.blue,
                 activeTrackColor: Colors.lightBlueAccent,
                 inactiveThumbColor: Colors.grey,

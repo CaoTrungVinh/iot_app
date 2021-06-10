@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:iot/chart_sensor//temp_chart_sensor.dart';
-import 'package:iot/devices/device_light.dart';
-import 'package:iot/devices/device_oxy.dart';
-import 'package:iot/devices/device_pumpIn.dart';
-import 'package:iot/devices/device_pumpOut.dart';
+import 'package:iot/devices/device_lamp.dart';
+import 'package:iot/devices/device_oxygen_fan.dart';
+import 'package:iot/devices/device_pump_in.dart';
+import 'package:iot/devices/device_pump_out.dart';
 
 class DeviceScreen extends StatefulWidget {
   @override

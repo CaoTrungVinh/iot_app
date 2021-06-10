@@ -26,6 +26,8 @@ dependencies:
   charts_flutter: ^0.10.0
 #  time_chart: ^0.2.5
   syncfusion_flutter_charts: ^18.4.49
+  dio: ^3.0.10
+  date_format: ^2.0.2
 
 dev_dependencies:
   flutter_test:

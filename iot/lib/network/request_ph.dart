@@ -4,7 +4,7 @@ import 'package:flutter/foundation.dart';
 import 'package:iot/model/ph_model.dart';
 
 class Request_Ph {
-  static const String url = 'http://192.168.43.156/iot/public/api/dataph';
+  static const String url = 'http://192.168.1.144/iot/public/api/dataph';
 
   static List<PH_Model> parsePh(String responseBody) {
     var list = json.decode(responseBody) as List<dynamic>;
