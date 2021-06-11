@@ -2,6 +2,8 @@ import 'package:date_format/date_format.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:iot/network/present_time.dart';
+import 'package:iot/network/post_data.dart';
 
 class Pump_In_Timer extends StatefulWidget {
   @override
@@ -24,6 +26,8 @@ class _Pump_In_TimerState extends State<Pump_In_Timer> {
   TimeOfDay selectedTime_Off = TimeOfDay(hour: 00, minute: 00);
   TextEditingController _dateController_Off = TextEditingController();
   TextEditingController _timeController_Off = TextEditingController();
+
+  String date_on, date_off;
 
   Future<Null> _selectDate_On(BuildContext context) async {
     final DateTime picked = await showDatePicker(
@@ -55,7 +59,7 @@ class _Pump_In_TimerState extends State<Pump_In_Timer> {
         _timeController_On.text = _time_on;
         _timeController_On.text = formatDate(
             DateTime(2019, 08, 1, selectedTime_On.hour, selectedTime_On.minute),
-            [HH, ':', nn, " ", am]).toString();
+            [HH, ':', nn]).toString();
         print('Giờ bật: ' + _timeController_On.text);
       });
   }
@@ -91,7 +95,7 @@ class _Pump_In_TimerState extends State<Pump_In_Timer> {
         _timeController_Off.text = formatDate(
             DateTime(
                 2019, 08, 1, selectedTime_Off.hour, selectedTime_Off.minute),
-            [HH, ':', nn, " ", am]).toString();
+            [HH, ':', nn]).toString();
         print('Giờ bật: ' + _timeController_Off.text);
       });
   }
@@ -143,7 +147,6 @@ class _Pump_In_TimerState extends State<Pump_In_Timer> {
                 height: 140,
               ),
             ),
-
             Text(
               'Ngày giờ bật máy bơm',
               style: TextStyle(
@@ -177,7 +180,7 @@ class _Pump_In_TimerState extends State<Pump_In_Timer> {
                       },
                       decoration: InputDecoration(
                           disabledBorder:
-                          UnderlineInputBorder(borderSide: BorderSide.none),
+                              UnderlineInputBorder(borderSide: BorderSide.none),
                           // labelText: 'Time',
                           contentPadding: EdgeInsets.only(top: 0.0)),
                     ),
@@ -202,7 +205,7 @@ class _Pump_In_TimerState extends State<Pump_In_Timer> {
                       controller: _timeController_On,
                       decoration: InputDecoration(
                           disabledBorder:
-                          UnderlineInputBorder(borderSide: BorderSide.none),
+                              UnderlineInputBorder(borderSide: BorderSide.none),
                           // labelText: 'Time',
                           contentPadding: EdgeInsets.all(5)),
                     ),
@@ -213,10 +216,11 @@ class _Pump_In_TimerState extends State<Pump_In_Timer> {
             SizedBox(
               height: 30,
             ),
-            Text('Ngày giờ tắt máy bơm', style: TextStyle(
-                color: Colors.black54,
-                fontSize: 15.5,
-                fontWeight: FontWeight.bold)),
+            Text('Ngày giờ tắt máy bơm',
+                style: TextStyle(
+                    color: Colors.black54,
+                    fontSize: 15.5,
+                    fontWeight: FontWeight.bold)),
             SizedBox(
               height: 10,
             ),
@@ -243,7 +247,7 @@ class _Pump_In_TimerState extends State<Pump_In_Timer> {
                       },
                       decoration: InputDecoration(
                           disabledBorder:
-                          UnderlineInputBorder(borderSide: BorderSide.none),
+                              UnderlineInputBorder(borderSide: BorderSide.none),
                           // labelText: 'Time',
                           contentPadding: EdgeInsets.only(top: 0.0)),
                     ),
@@ -268,7 +272,7 @@ class _Pump_In_TimerState extends State<Pump_In_Timer> {
                       controller: _timeController_Off,
                       decoration: InputDecoration(
                           disabledBorder:
-                          UnderlineInputBorder(borderSide: BorderSide.none),
+                              UnderlineInputBorder(borderSide: BorderSide.none),
                           // labelText: 'Time',
                           contentPadding: EdgeInsets.all(5)),
                     ),
@@ -276,7 +280,6 @@ class _Pump_In_TimerState extends State<Pump_In_Timer> {
                 ),
               ],
             ),
-
             SizedBox(
               height: 30,
             ),
@@ -284,7 +287,17 @@ class _Pump_In_TimerState extends State<Pump_In_Timer> {
               // height: 48,
               width: 1000,
               child: RaisedButton(
-                onPressed: () {},
+                onPressed: () {
+                  date_on = _dateController_On.text + ' ' + _timeController_On.text;
+                  date_off = _dateController_Off.text + ' ' + _timeController_Off.text;
+
+                  _dateController_On.text.contains('Chọn ngày') ||
+                  _dateController_On.text.contains('Chọn giờ') ||
+                  _dateController_Off.text.contains('Chọn ngày') ||
+                  _timeController_Off.text.contains('Chọn giờ')
+                      ? _showErro()
+                      : _showDialogTimerOnOff(context,2,'Hẹn giờ bật tắt bơm tự động',todayDate(),date_on,date_off);
+                },
                 elevation: 5,
                 padding: EdgeInsets.all(15),
                 shape: RoundedRectangleBorder(
@@ -300,6 +313,70 @@ class _Pump_In_TimerState extends State<Pump_In_Timer> {
           ],
         ),
       ),
+    );
+  }
+
+  _showErro() {
+    return showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Hẹn giờ bật tắt bơm'),
+          content: SingleChildScrollView(
+            child: ListBody(
+              children: <Widget>[
+                Text('Vui lòng nhập lại'),
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            FlatButton(
+              child: Text('Đồng ý'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  _showDialogTimerOnOff(BuildContext context, int control, String description,
+      String created_at, String timer_on, String timer_off) {
+    return showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Hẹn giờ bật tắt bơm'),
+          content: SingleChildScrollView(
+            child: ListBody(
+              children: <Widget>[
+                Text('Bật bơm: ' + date_on.toString()),
+                Text('Tắt bơm: ' + date_off.toString()),
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            FlatButton(
+              child: Text('Huỷ bỏ'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+            FlatButton(
+              child: Text('Đồng ý'),
+              onPressed: () async {
+                print('Post data');
+                await Timer_Device_PumpIn_On_Off(control, description, created_at, timer_on, timer_off).then((value) {
+                  print(value);
+                });
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
     );
   }
 }

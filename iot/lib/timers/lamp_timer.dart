@@ -5,12 +5,12 @@ import 'package:intl/intl.dart';
 import 'package:iot/network/present_time.dart';
 import 'package:iot/network/post_data.dart';
 
-class Pump_Out_Timer extends StatefulWidget {
+class Lamp_Timer extends StatefulWidget {
   @override
-  _Pump_Out_TimerState createState() => _Pump_Out_TimerState();
+  _Lamp_TimerState createState() => _Lamp_TimerState();
 }
 
-class _Pump_Out_TimerState extends State<Pump_Out_Timer> {
+class _Lamp_TimerState extends State<Lamp_Timer> {
   String _setTime_On, _setDate_On;
   String _hour_on, _minute_on, _time_on;
   String dateTime_On;
@@ -123,7 +123,7 @@ class _Pump_Out_TimerState extends State<Pump_Out_Timer> {
               Navigator.pop(context);
             }),
         title: Text(
-          'Hẹn giờ bật tắt bơm',
+          'Hẹn giờ bật tắt đèn',
           style: TextStyle(
             fontSize: 16,
             color: Colors.black,
@@ -143,12 +143,12 @@ class _Pump_Out_TimerState extends State<Pump_Out_Timer> {
               padding: const EdgeInsets.all(20.0),
               alignment: Alignment.center,
               child: Image(
-                image: AssetImage('assets/images/bomout.png'),
+                image: AssetImage('assets/images/light.png'),
                 height: 140,
               ),
             ),
             Text(
-              'Ngày giờ bật máy bơm',
+              'Ngày giờ bật đèn',
               style: TextStyle(
                   color: Colors.black54,
                   fontSize: 15.5,
@@ -216,7 +216,7 @@ class _Pump_Out_TimerState extends State<Pump_Out_Timer> {
             SizedBox(
               height: 30,
             ),
-            Text('Ngày giờ tắt máy bơm',
+            Text('Ngày giờ tắt đèn',
                 style: TextStyle(
                     color: Colors.black54,
                     fontSize: 15.5,
@@ -296,7 +296,7 @@ class _Pump_Out_TimerState extends State<Pump_Out_Timer> {
                       _dateController_Off.text.contains('Chọn ngày') ||
                       _timeController_Off.text.contains('Chọn giờ')
                       ? _showErro()
-                      : _showDialogTimerOnOff(context,2,'Hẹn giờ bật tắt bơm tự động',todayDate(),date_on,date_off);
+                      : _showDialogTimerOnOff(context,2,'Hẹn giờ bật tắt đèn tự động',todayDate(),date_on,date_off);
                 },
                 elevation: 5,
                 padding: EdgeInsets.all(15),
@@ -321,7 +321,7 @@ class _Pump_Out_TimerState extends State<Pump_Out_Timer> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('Hẹn giờ bật tắt bơm'),
+          title: Text('Hẹn giờ bật tắt đèn'),
           content: SingleChildScrollView(
             child: ListBody(
               children: <Widget>[
@@ -348,12 +348,12 @@ class _Pump_Out_TimerState extends State<Pump_Out_Timer> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('Hẹn giờ bật tắt bơm'),
+          title: Text('Hẹn giờ bật tắt đèn'),
           content: SingleChildScrollView(
             child: ListBody(
               children: <Widget>[
-                Text('Bật bơm: ' + date_on.toString()),
-                Text('Tắt bơm: ' + date_off.toString()),
+                Text('Bật đèn: ' + date_on.toString()),
+                Text('Tắt đèn: ' + date_off.toString()),
               ],
             ),
           ),
@@ -368,7 +368,7 @@ class _Pump_Out_TimerState extends State<Pump_Out_Timer> {
               child: Text('Đồng ý'),
               onPressed: () async {
                 print('Post data');
-                await Timer_Device_PumpOut_On_Off(control, description, created_at, timer_on, timer_off).then((value) {
+                await Timer_Device_Lamp_On_Off(control, description, created_at, timer_on, timer_off).then((value) {
                   print(value);
                 });
                 Navigator.of(context).pop();

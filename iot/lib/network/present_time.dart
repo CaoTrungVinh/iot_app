@@ -9,7 +9,8 @@ String todayDate() {
 
   // DateTime now = DateTime.now();
   // String formattedDate = DateFormat('yyyy-MM-dd HH:mm').format(now);
-  // print(formattedDate + 'abc');
+  // var formatedTimes = formattedDate.toString().split(':');
+  // print(formattedDate);
 
   var stringList =  DateTime.now().toIso8601String().split(new RegExp(r"[T\.]"));
   var formatedDate = "${stringList[0]} ${stringList[1]}";

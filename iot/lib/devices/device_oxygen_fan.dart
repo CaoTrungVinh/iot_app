@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:iot/network/get_data.dart';
 import 'package:iot/network/post_data.dart';
 import 'package:iot/network/present_time.dart';
+import 'package:iot/timers/oxygen_fan_timer.dart';
 
 class Device_Oxy extends StatefulWidget {
   const Device_Oxy({Key key}) : super(key: key);
@@ -114,7 +115,14 @@ class _Device_OxyState extends State<Device_Oxy> {
               )),
           FlatButton (
             child: Text("Hẹn giờ"),
-            onPressed: () {},
+            onPressed: () => {
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (context) =>
+                  Oxygen_Fan_Timer(),
+                ),
+              )
+            },
             color: Colors.blue,
             textColor: Colors.white,
           )

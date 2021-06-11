@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:iot/network/get_data.dart';
 import 'package:iot/network/post_data.dart';
 import 'package:iot/network/present_time.dart';
+import 'package:iot/timers/lamp_timer.dart';
 
 class Device_Light extends StatefulWidget {
   const Device_Light({Key key}) : super(key: key);
@@ -114,7 +115,14 @@ class _Device_LightState extends State<Device_Light> {
               )),
           FlatButton (
             child: Text("Hẹn giờ"),
-            onPressed: () {},
+            onPressed: () => {
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (context) =>
+                      Lamp_Timer(),
+                ),
+              )
+            },
             color: Colors.blue,
             textColor: Colors.white,
           )
