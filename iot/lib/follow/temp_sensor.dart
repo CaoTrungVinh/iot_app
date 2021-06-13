@@ -112,7 +112,7 @@ class _Temp_SensorState extends State<Temp_Sensor> {
                       Navigator.of(context).push(
                         MaterialPageRoute(
                           builder: (context) =>
-                              test(),
+                              Temp_Chart_Screen(),
                         ),
                       )
                     },

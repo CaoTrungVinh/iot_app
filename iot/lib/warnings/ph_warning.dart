@@ -103,7 +103,8 @@ class _Ph_WarningState extends State<Ph_Warning> {
               style: TextStyle(
                   color: Colors.black54,
                   fontSize: 16,
-                  fontWeight: FontWeight.bold),
+                  fontWeight: FontWeight.bold
+              ),
             ),
             SizedBox(
               height: 10,
@@ -151,7 +152,7 @@ class _Ph_WarningState extends State<Ph_Warning> {
                       : _showDialogWarning(context, min_ph, max_ph);
                 },
                 elevation: 5,
-                padding: EdgeInsets.all(15),
+                padding: EdgeInsets.all(14),
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(15)),
                 color: Colors.blueAccent,

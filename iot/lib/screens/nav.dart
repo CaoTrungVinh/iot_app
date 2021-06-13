@@ -11,7 +11,7 @@ class Nav extends StatefulWidget {
 }
 
 class _NavState extends State<Nav> {
-  int _currentIndex = 3;
+  int _currentIndex = 1;
 
   final tabs = [
     UserScreeen(),

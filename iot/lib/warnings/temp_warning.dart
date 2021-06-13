@@ -151,7 +151,7 @@ class _Temp_WarningState extends State<Temp_Warning> {
                             : _showDialogWarning(context, min_temp, max_temp);
                       },
                       elevation: 5,
-                      padding: EdgeInsets.all(15),
+                      padding: EdgeInsets.all(14),
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(15)),
                       color: Colors.blueAccent,
