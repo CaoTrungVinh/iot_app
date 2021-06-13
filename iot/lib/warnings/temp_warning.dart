@@ -155,11 +155,11 @@ class _Temp_WarningState extends State<Temp_Warning> {
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(15)),
                       color: Colors.blueAccent,
-                      child: Text('Cảnh báo',
+                      child: Text('CẢNH BÁO',
                           style: TextStyle(
                               color: Colors.white,
-                              fontSize: 17,
-                              fontWeight: FontWeight.bold)),
+                              fontSize: 16,
+                              )),
                     ),
                   ),
                 ],

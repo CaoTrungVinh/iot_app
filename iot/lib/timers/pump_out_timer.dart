@@ -303,11 +303,11 @@ class _Pump_Out_TimerState extends State<Pump_Out_Timer> {
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(15)),
                 color: Colors.blueAccent,
-                child: Text('Hẹn giờ',
+                child: Text('HẸN GIỜ',
                     style: TextStyle(
                         color: Colors.white,
                         fontSize: 16,
-                        fontWeight: FontWeight.bold)),
+                        )),
               ),
             ),
           ],
