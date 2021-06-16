@@ -137,3 +137,18 @@ Future get_oxygen_fan() async {
   Response response = await dio.get(pathUrl);
   return response.data;
 }
+
+Future getTimer_PumpIn() async {
+  final String pathUrl = url + 'timer_pump_in';
+  dio.interceptors
+      .add(InterceptorsWrapper(onRequest: (RequestOptions option) async {
+    var headers = {
+      'Content-type': 'application/json; charset=UTF-8',
+      'Accept': 'application/json'
+    };
+    option.headers.addAll(headers);
+    return option.data;
+  }));
+  Response response = await dio.get(pathUrl);
+  return response.data;
+}

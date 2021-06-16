@@ -2,6 +2,7 @@ import 'package:date_format/date_format.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:iot/network/get_data.dart';
 import 'package:iot/network/present_time.dart';
 import 'package:iot/network/post_data.dart';
 
@@ -26,6 +27,9 @@ class _Pump_In_TimerState extends State<Pump_In_Timer> {
   TimeOfDay selectedTime_Off = TimeOfDay(hour: 00, minute: 00);
   TextEditingController _dateController_Off = TextEditingController();
   TextEditingController _timeController_Off = TextEditingController();
+
+  bool isLoading = false;
+  int device;
 
   String date_on, date_off;
 
@@ -100,13 +104,71 @@ class _Pump_In_TimerState extends State<Pump_In_Timer> {
       });
   }
 
+  Future<void> get_Device() async {
+    if (isLoading) return;
+    isLoading = true;
+    await getPumpIn().then(
+      (value) {
+        if (value == null) {
+          isLoading = false;
+          return;
+        }
+        setState(() {
+          device = value;
+          print(device);
+        });
+        isLoading = false;
+      },
+      onError: (err) {
+        // print(err);
+        isLoading = false;
+      },
+    );
+  }
+
+  Future<void> getTimer_Device() async {
+    if (isLoading) return;
+    isLoading = true;
+    await getPumpIn().then(
+          (value) {
+        if (value == null) {
+          isLoading = false;
+          return;
+        }
+        setState(() {
+          print(value);
+          device = value;
+          // List<String> output = value.split("#");
+          // String min = output[0].trim();
+          // String minaa = output[1].trim();
+          // print(min);
+          // print(minaa);
+        });
+        isLoading = false;
+      },
+      onError: (err) {
+        // print(err);
+        isLoading = false;
+      },
+    );
+  }
   @override
   void initState() {
-    _dateController_On.text = 'Chọn ngày';
-    _timeController_On.text = 'Chọn giờ';
-    _dateController_Off.text = 'Chọn ngày';
-    _timeController_Off.text = 'Chọn giờ';
     super.initState();
+    get_Device();
+    getTimer_Device();
+    // if (min_temp.isEmpty){
+    //   _dateController_On.text =  min_temp;
+    //
+    // }else{
+    //   _dateController_On.text =  'Chọn ngày';
+    // }
+    // _dateController_On.text =  min_temp;
+    // _timeController_On.text = 'Chọn giờ';
+    // _dateController_Off.text = 'Chọn ngày';
+    // _timeController_Off.text = 'Chọn giờ';
+    // print(_dateController_On.text);
+    // print(min_temp + "a");
   }
 
   @override
@@ -179,6 +241,7 @@ class _Pump_In_TimerState extends State<Pump_In_Timer> {
                         _setDate_On = val;
                       },
                       decoration: InputDecoration(
+                          hintText: 'Chọn ngày',
                           disabledBorder:
                               UnderlineInputBorder(borderSide: BorderSide.none),
                           // labelText: 'Time',
@@ -204,6 +267,7 @@ class _Pump_In_TimerState extends State<Pump_In_Timer> {
                       keyboardType: TextInputType.text,
                       controller: _timeController_On,
                       decoration: InputDecoration(
+                          hintText: 'Chọn giờ',
                           disabledBorder:
                               UnderlineInputBorder(borderSide: BorderSide.none),
                           // labelText: 'Time',
@@ -246,6 +310,7 @@ class _Pump_In_TimerState extends State<Pump_In_Timer> {
                         _setDate_Off = val;
                       },
                       decoration: InputDecoration(
+                          hintText: 'Chọn ngày',
                           disabledBorder:
                               UnderlineInputBorder(borderSide: BorderSide.none),
                           // labelText: 'Time',
@@ -271,6 +336,7 @@ class _Pump_In_TimerState extends State<Pump_In_Timer> {
                       keyboardType: TextInputType.text,
                       controller: _timeController_Off,
                       decoration: InputDecoration(
+                          hintText: 'Chọn giờ',
                           disabledBorder:
                               UnderlineInputBorder(borderSide: BorderSide.none),
                           // labelText: 'Time',
@@ -288,15 +354,25 @@ class _Pump_In_TimerState extends State<Pump_In_Timer> {
               width: 1000,
               child: RaisedButton(
                 onPressed: () {
-                  date_on = _dateController_On.text + ' ' + _timeController_On.text;
-                  date_off = _dateController_Off.text + ' ' + _timeController_Off.text;
+                  date_on =
+                      _dateController_On.text + ' ' + _timeController_On.text;
+                  date_off =
+                      _dateController_Off.text + ' ' + _timeController_Off.text;
 
-                  _dateController_On.text.contains('Chọn ngày') ||
-                  _dateController_On.text.contains('Chọn giờ') ||
-                  _dateController_Off.text.contains('Chọn ngày') ||
-                  _timeController_Off.text.contains('Chọn giờ')
+                  _dateController_On.text.isEmpty ||
+                          _dateController_On.text.isEmpty ||
+                          _dateController_Off.text.isEmpty ||
+                          _timeController_Off.text.isEmpty
                       ? _showErro()
-                      : _showDialogTimerOnOff(context,2,'Hẹn giờ bật tắt bơm tự động',todayDate(),date_on,date_off);
+                      : device == 0 || device == 2
+                          ? _showDialogTimerOnOff(
+                              context,
+                              2,
+                              'Hẹn giờ bật tắt bơm tự động',
+                              todayDate(),
+                              date_on,
+                              date_off)
+                          : _showErro();
                 },
                 elevation: 5,
                 padding: EdgeInsets.all(15),
@@ -305,9 +381,9 @@ class _Pump_In_TimerState extends State<Pump_In_Timer> {
                 color: Colors.blueAccent,
                 child: Text('HẸN GIỜ',
                     style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 16,
-                        )),
+                      color: Colors.white,
+                      fontSize: 16,
+                    )),
               ),
             ),
           ],
@@ -321,11 +397,13 @@ class _Pump_In_TimerState extends State<Pump_In_Timer> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('Hẹn giờ bật tắt bơm'),
+          title: Text('Hẹn giờ'),
           content: SingleChildScrollView(
             child: ListBody(
               children: <Widget>[
-                Text('Vui lòng nhập lại'),
+                device == 0 || device == 2
+                    ? Text('Vui lòng nhập lại')
+                    : Text('Vui lòng tắt máy bơm và nhập lại'),
               ],
             ),
           ),
@@ -348,7 +426,7 @@ class _Pump_In_TimerState extends State<Pump_In_Timer> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('Hẹn giờ bật tắt bơm'),
+          title: Text('Hẹn giờ'),
           content: SingleChildScrollView(
             child: ListBody(
               children: <Widget>[
@@ -368,7 +446,9 @@ class _Pump_In_TimerState extends State<Pump_In_Timer> {
               child: Text('Đồng ý'),
               onPressed: () async {
                 print('Post data');
-                await Timer_Device_PumpIn_On_Off(control, description, created_at, timer_on, timer_off).then((value) {
+                await Timer_Device_PumpIn_On_Off(
+                        control, description, created_at, timer_on, timer_off)
+                    .then((value) {
                   print(value);
                 });
                 Navigator.of(context).pop();

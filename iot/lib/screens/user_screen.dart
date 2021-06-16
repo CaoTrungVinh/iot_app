@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:iot/model/utils.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class UserScreeen extends StatefulWidget {
   @override
@@ -8,6 +9,8 @@ class UserScreeen extends StatefulWidget {
 
 // const UserScreeen({Key key}) : super(key: key);
 class UserClass extends State {
+  final String title = 'Url Launcher';
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -58,28 +61,62 @@ class UserClass extends State {
                       fontFamily: "Anton-Regular"),
                 ),
               ),
-              Center(
-                child: Container(
-                  width: 160,
-                  decoration: BoxDecoration(
-                    borderRadius:
-                    const BorderRadius.all(const Radius.circular(25.0)),
-                    color: Colors.redAccent,
-                  ),
-                  margin: EdgeInsets.fromLTRB(0.0, 30.0, 0.0, 0.0),
-                  child: FlatButton(
-                    child: Row(
-                      children: [
-                        Icon(Icons.call),
-                        Text(
-                          '  Call Now',
-                          style: TextStyle(fontSize: 20.0),
-                        ),
-                      ],
+              Container(
+                margin: EdgeInsets.fromLTRB(0.0, 30.0, 0.0, 0.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    Container(
+                      width: 140,
+                      decoration: BoxDecoration(
+                        borderRadius:
+                            const BorderRadius.all(const Radius.circular(25.0)),
+                        color: Color(0xff56C222),
+                      ),
+                      // margin: EdgeInsets.fromLTRB(30.0, 30.0, 30.0, 0.0),
+                      child: FlatButton(
+                          child: Row(
+                            children: [
+                              Icon(Icons.call),
+                              Text(
+                                '  Call Now',
+                                style: TextStyle(fontSize: 17.0),
+                              ),
+                            ],
+                          ),
+                          textColor: Colors.white,
+                          onPressed: () {
+                            Utils.openPhoneCall(phoneNumber: '0348004562');
+                          }),
                     ),
-                    textColor: Colors.white,
-                    onPressed: () {},
-                  ),
+                    Container(
+                      width: 140,
+                      decoration: BoxDecoration(
+                        borderRadius:
+                        const BorderRadius.all(const Radius.circular(25.0)),
+                        color: Colors.redAccent,
+                      ),
+                      // margin: EdgeInsets.fromLTRB(30.0, 30.0, 30.0, 0.0),
+                      child: FlatButton(
+                          child: Row(
+                            children: [
+                              Icon(Icons.email),
+                              Text(
+                                '     Email',
+                                style: TextStyle(fontSize: 17),
+                              ),
+                            ],
+                          ),
+                          textColor: Colors.white,
+                          onPressed: () {
+                            Utils.openEmail(
+                              toEmail: 'example@gmail.com',
+                              subject: 'Hello World',
+                              body: 'This works great!',
+                            );
+                          }),
+                    ),
+                  ],
                 ),
               ),
             ],
@@ -94,7 +131,10 @@ class UserClass extends State {
                 child: Row(
                   children: [
                     Icon(Icons.account_circle),
-                    Text("      " + "Cao Trung Vĩnh", style: TextStyle(color: Colors.black54, fontSize: 17),),
+                    Text(
+                      "      " + "Cao Trung Vĩnh",
+                      style: TextStyle(color: Colors.black54, fontSize: 17),
+                    ),
                   ],
                 ),
               ),
@@ -103,7 +143,10 @@ class UserClass extends State {
                 child: Row(
                   children: [
                     Icon(Icons.accessibility_new_outlined),
-                    Text("      " + "Nam", style: TextStyle(color: Colors.black54, fontSize: 17),),
+                    Text(
+                      "      " + "Nam",
+                      style: TextStyle(color: Colors.black54, fontSize: 17),
+                    ),
                   ],
                 ),
               ),
@@ -112,7 +155,10 @@ class UserClass extends State {
                 child: Row(
                   children: [
                     Icon(Icons.phone),
-                    Text("      " + "0348004562", style: TextStyle(color: Colors.black54, fontSize: 17),),
+                    Text(
+                      "      " + "0348004562",
+                      style: TextStyle(color: Colors.black54, fontSize: 17),
+                    ),
                   ],
                 ),
               ),
@@ -121,7 +167,10 @@ class UserClass extends State {
                 child: Row(
                   children: [
                     Icon(Icons.location_on_sharp),
-                    Text("      " + "Thủ Đức", style: TextStyle(color: Colors.black54, fontSize: 17),),
+                    Text(
+                      "      " + "Thủ Đức",
+                      style: TextStyle(color: Colors.black54, fontSize: 17),
+                    ),
                   ],
                 ),
               ),

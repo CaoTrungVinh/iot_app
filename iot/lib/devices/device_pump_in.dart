@@ -37,8 +37,10 @@ class _Device_PumpInState extends State<Device_PumpIn> {
       setState(() {
         if (value == 1 || value == 2){
           isSwitchedBomIn = true;
+          // print(value);
         }else if (value == 0){
           isSwitchedBomIn = false;
+          // print(value);
         }
       });
       isLoading = false;
