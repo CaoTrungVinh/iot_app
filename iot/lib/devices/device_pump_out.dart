@@ -109,7 +109,7 @@ class _Device_PumpOutState extends State<Device_PumpOut> {
                 onChanged: switchBomOut,
                 value: isSwitchedBomOut,
                 activeColor: Colors.blue,
-                activeTrackColor: Colors.lightBlueAccent,
+                activeTrackColor: Colors.lightBlue,
                 inactiveThumbColor: Colors.grey,
                 inactiveTrackColor: Colors.grey[300],
               )),

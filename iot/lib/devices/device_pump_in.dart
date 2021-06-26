@@ -106,7 +106,7 @@ class _Device_PumpInState extends State<Device_PumpIn> {
                 onChanged: switchBomIn,
                 value: isSwitchedBomIn,
                 activeColor: Colors.blue,
-                activeTrackColor: Colors.lightBlueAccent,
+                activeTrackColor: Colors.lightBlue,
                 inactiveThumbColor: Colors.grey,
                 inactiveTrackColor: Colors.grey[300],
               )),

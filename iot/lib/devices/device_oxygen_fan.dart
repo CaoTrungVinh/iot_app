@@ -109,7 +109,7 @@ class _Device_OxyState extends State<Device_Oxy> {
                 onChanged: switchGraphic,
                 value: isSwitchedGraphic,
                 activeColor: Colors.blue,
-                activeTrackColor: Colors.lightBlueAccent,
+                activeTrackColor: Colors.lightBlue,
                 inactiveThumbColor: Colors.grey,
                 inactiveTrackColor: Colors.grey[300],
               )),

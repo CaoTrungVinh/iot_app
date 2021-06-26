@@ -109,7 +109,7 @@ class _Device_LightState extends State<Device_Light> {
                 onChanged: switchLamp,
                 value: isSwitchedLamp,
                 activeColor: Colors.blue,
-                activeTrackColor: Colors.lightBlueAccent,
+                activeTrackColor: Colors.lightBlue,
                 inactiveThumbColor: Colors.grey,
                 inactiveTrackColor: Colors.grey[300],
               )),

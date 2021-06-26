@@ -152,3 +152,33 @@ Future getTimer_PumpIn() async {
   Response response = await dio.get(pathUrl);
   return response.data;
 }
+
+Future get_notification_temp() async {
+  final String pathUrl = url + 'get_warning_temp';
+  dio.interceptors
+      .add(InterceptorsWrapper(onRequest: (RequestOptions option) async {
+    var headers = {
+      'Content-type': 'application/json; charset=UTF-8',
+      'Accept': 'application/json'
+    };
+    option.headers.addAll(headers);
+    return option.data;
+  }));
+  Response response = await dio.get(pathUrl);
+  return response.data;
+}
+
+Future get_notification_ph() async {
+  final String pathUrl = url + 'get_warning_ph';
+  dio.interceptors
+      .add(InterceptorsWrapper(onRequest: (RequestOptions option) async {
+    var headers = {
+      'Content-type': 'application/json; charset=UTF-8',
+      'Accept': 'application/json'
+    };
+    option.headers.addAll(headers);
+    return option.data;
+  }));
+  Response response = await dio.get(pathUrl);
+  return response.data;
+}

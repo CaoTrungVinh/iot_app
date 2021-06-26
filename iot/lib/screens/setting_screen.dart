@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:iot/setting/notification_ph.dart';
+import 'package:iot/setting/notification_temp.dart';
 
 class SettingScreen extends StatefulWidget {
   const SettingScreen({Key key}) : super(key: key);
@@ -46,86 +48,8 @@ class _SettingScreenState extends State<SettingScreen> {
               children: ListTile.divideTiles(
                 context: context,
                 tiles: [
-                  ListTile(
-                    title: Text(
-                      'Thông báo đẩy hẹn giờ',
-                      style: TextStyle(color: Colors.black),
-                    ),
-                    trailing: Transform.scale(
-                        scale: 1.1,
-                        child: Switch(
-                          onChanged: switchpush,
-                          value: isSwitchedBomIn,
-                          activeColor: Colors.blue,
-                          activeTrackColor: Colors.blueAccent,
-                          inactiveThumbColor: Colors.grey,
-                          inactiveTrackColor: Colors.grey[300],
-                        )),
-                  ),
-                  ListTile(
-                    title: Text(
-                      'Thông báo đẩy nhiệt độ',
-                      style: TextStyle(color: Colors.black),
-                    ),
-                    trailing: Transform.scale(
-                        scale: 1.1,
-                        child: Switch(
-                          onChanged: switchpush,
-                          value: isSwitchedBomIn,
-                          activeColor: Colors.blue,
-                          activeTrackColor: Colors.blueAccent,
-                          inactiveThumbColor: Colors.grey,
-                          inactiveTrackColor: Colors.grey[300],
-                        )),
-                  ),
-                  ListTile(
-                    title: Text(
-                      'Thông báo đẩy độ Ph',
-                      style: TextStyle(color: Colors.black),
-                    ),
-                    trailing: Transform.scale(
-                        scale: 1.1,
-                        child: Switch(
-                          onChanged: switchpush,
-                          value: isSwitchedBomIn,
-                          activeColor: Colors.blue,
-                          activeTrackColor: Colors.blueAccent,
-                          inactiveThumbColor: Colors.grey,
-                          inactiveTrackColor: Colors.grey[300],
-                        )),
-                  ),
-                  ListTile(
-                    title: Text(
-                      'Cảnh báo nhiệt độ',
-                      style: TextStyle(color: Colors.black),
-                    ),
-                    trailing: Transform.scale(
-                        scale: 1.1,
-                        child: Switch(
-                          onChanged: switchpush,
-                          value: isSwitchedBomIn,
-                          activeColor: Colors.blue,
-                          activeTrackColor: Colors.blueAccent,
-                          inactiveThumbColor: Colors.grey,
-                          inactiveTrackColor: Colors.grey[300],
-                        )),
-                  ),
-                  ListTile(
-                    title: Text(
-                      'Cảnh báo Ph',
-                      style: TextStyle(color: Colors.black),
-                    ),
-                    trailing: Transform.scale(
-                        scale: 1.1,
-                        child: Switch(
-                          onChanged: switchpush,
-                          value: isSwitchedBomIn,
-                          activeColor: Colors.blue,
-                          activeTrackColor: Colors.blueAccent,
-                          inactiveThumbColor: Colors.grey,
-                          inactiveTrackColor: Colors.grey[300],
-                        )),
-                  ),
+                  Setting_Notification_Temp(),
+                  Setting_Notification_Ph(),
                 ],
               ).toList(),
             ),
