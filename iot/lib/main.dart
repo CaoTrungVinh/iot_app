@@ -6,6 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:iot/push_notifications/local_notification_service.dart';
 import 'package:iot/screens/nav.dart';
+import 'package:get/get.dart';
+import 'package:iot/screens/user_screen.dart';
 
 Future<void> backgroundHandler(RemoteMessage message) {
   print(message.data.toString());
@@ -31,9 +33,14 @@ class MyApp extends StatelessWidget {
       systemNavigationBarIconBrightness:
           Brightness.dark, //navigation bar icons' color
     ));
-    return MaterialApp(
+    return GetMaterialApp(
       home: Nav(),
       debugShowCheckedModeBanner: false,
+      title: 'App_CV',
+      getPages: [
+        GetPage(name: '/home', page: () => UserScreeen()),
+        // GetPage(name: '/auth', page: () => AuthPage()),
+      ],
     );
   }
 }
