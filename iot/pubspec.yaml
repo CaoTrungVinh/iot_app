@@ -64,6 +64,7 @@ flutter:
      - assets/images/canhbao_temp.png
      - assets/images/canhbao_ph.png
      - assets/images/logo.png
+     - assets/images/auth_back.jpg
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

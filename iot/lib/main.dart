@@ -5,6 +5,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:iot/push_notifications/local_notification_service.dart';
+import 'package:iot/screens/auth_screen.dart';
 import 'package:iot/screens/nav.dart';
 import 'package:get/get.dart';
 import 'package:iot/screens/user_screen.dart';
@@ -34,12 +35,13 @@ class MyApp extends StatelessWidget {
           Brightness.dark, //navigation bar icons' color
     ));
     return GetMaterialApp(
-      home: Nav(),
-      debugShowCheckedModeBanner: false,
+      // home: Nav(),
       title: 'App_CV',
+      initialRoute: '/home',
+      debugShowCheckedModeBanner: false,
       getPages: [
-        GetPage(name: '/home', page: () => UserScreeen()),
-        // GetPage(name: '/auth', page: () => AuthPage()),
+        GetPage(name: '/home', page: () => Nav()),
+        GetPage(name: '/auth', page: () => AuthPage()),
       ],
     );
   }

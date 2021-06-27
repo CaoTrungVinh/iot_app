@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:iot/model/utils.dart';
+import 'package:get/get.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class UserScreeen extends StatefulWidget {
@@ -174,9 +175,34 @@ class UserClass extends State {
                   ],
                 ),
               ),
+              Container(
+                width: 140,
+                decoration: BoxDecoration(
+                  borderRadius:
+                  const BorderRadius.all(const Radius.circular(25.0)),
+                  color: Colors.blueAccent,
+                ),
+                child: Row(
+                  children: [
+                    FlatButton(
+                      onPressed: (){
+                        Get.toNamed('/auth');
+                      },
+                      // color: Colors.blue,
+
+                      child: Text(
+                        'Đăng nhập',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(fontSize: 17, color: Colors.white, ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
             ],
           ),
-        )
+        ),
+
       ],
     );
   }
