@@ -4,11 +4,9 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:iot/authentication/Welcome/welcome_screen.dart';
 import 'package:iot/push_notifications/local_notification_service.dart';
-import 'package:iot/screens/auth_screen.dart';
 import 'package:iot/screens/nav.dart';
-import 'package:get/get.dart';
-import 'package:iot/screens/user_screen.dart';
 
 Future<void> backgroundHandler(RemoteMessage message) {
   print(message.data.toString());
@@ -20,7 +18,18 @@ void main() async {
   LocalNotificationService.initialize();
   await Firebase.initializeApp();
   FirebaseMessaging.onBackgroundMessage(backgroundHandler);
-
+  // FirebaseMessaging.onMessage.listen((message) {
+  //   if (message.notification != null){
+  //     print(message.notification.body);
+  //     print(message.notification.title);
+  //   }
+  //   LocalNotificationService.display(message);
+  // });
+  // FirebaseMessaging.onMessageOpenedApp.listen((message) {
+  // });
+  // FirebaseMessaging.instance.getToken().then((token){
+  //   print("Token firebase: $token");
+  // });
   runApp(MyApp());
 }
 
@@ -32,17 +41,11 @@ class MyApp extends StatelessWidget {
       statusBarColor: Colors.transparent, // status bar color
       statusBarIconBrightness: Brightness.dark, // status bar icons' color
       systemNavigationBarIconBrightness:
-          Brightness.dark, //navigation bar icons' color
+      Brightness.dark, //navigation bar icons' color
     ));
-    return GetMaterialApp(
-      // home: Nav(),
-      title: 'App_CV',
-      initialRoute: '/home',
+    return MaterialApp(
+      home: Nav(),
       debugShowCheckedModeBanner: false,
-      getPages: [
-        GetPage(name: '/home', page: () => Nav()),
-        GetPage(name: '/auth', page: () => AuthPage()),
-      ],
     );
   }
 }

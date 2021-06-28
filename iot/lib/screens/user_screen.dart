@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:iot/model/utils.dart';
-import 'package:get/get.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class UserScreeen extends StatefulWidget {
@@ -43,7 +42,7 @@ class UserClass extends State {
               Container(
                 margin: EdgeInsets.fromLTRB(30.0, 30.0, 0.0, 0.0),
                 child: Text(
-                  "Are you feeling good?",
+                  "Bạn có cảm thấy tốt không?",
                   style: TextStyle(
                       color: Colors.white,
                       fontSize: 23,
@@ -55,7 +54,7 @@ class UserClass extends State {
                 width: 300,
                 margin: EdgeInsets.fromLTRB(30.0, 10.0, 0.0, 0.0),
                 child: Text(
-                  "If you don't feel okay with anything, please call us immediately for help.",
+                  "Nếu cảm thấy không ổn với bất cứ điều gì hãy gọi cho chúng tôi để được giúp đỡ.",
                   style: TextStyle(
                       color: Colors.white70,
                       fontSize: 16,
@@ -71,7 +70,7 @@ class UserClass extends State {
                       width: 140,
                       decoration: BoxDecoration(
                         borderRadius:
-                            const BorderRadius.all(const Radius.circular(25.0)),
+                        const BorderRadius.all(const Radius.circular(25.0)),
                         color: Color(0xff56C222),
                       ),
                       // margin: EdgeInsets.fromLTRB(30.0, 30.0, 30.0, 0.0),
@@ -80,7 +79,7 @@ class UserClass extends State {
                             children: [
                               Icon(Icons.call),
                               Text(
-                                '  Call Now',
+                                '  Gọi điện',
                                 style: TextStyle(fontSize: 17.0),
                               ),
                             ],
@@ -103,7 +102,7 @@ class UserClass extends State {
                             children: [
                               Icon(Icons.email),
                               Text(
-                                '     Email',
+                                ' Gửi email',
                                 style: TextStyle(fontSize: 17),
                               ),
                             ],
@@ -175,34 +174,9 @@ class UserClass extends State {
                   ],
                 ),
               ),
-              Container(
-                width: 140,
-                decoration: BoxDecoration(
-                  borderRadius:
-                  const BorderRadius.all(const Radius.circular(25.0)),
-                  color: Colors.blueAccent,
-                ),
-                child: Row(
-                  children: [
-                    FlatButton(
-                      onPressed: (){
-                        Get.toNamed('/auth');
-                      },
-                      // color: Colors.blue,
-
-                      child: Text(
-                        'Đăng nhập',
-                        textAlign: TextAlign.center,
-                        style: TextStyle(fontSize: 17, color: Colors.white, ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
             ],
           ),
-        ),
-
+        )
       ],
     );
   }

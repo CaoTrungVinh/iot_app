@@ -18,7 +18,7 @@ class _NavState extends State<Nav> {
     // TODO: implement initState
     super.initState();
     FirebaseMessaging.instance.getToken().then((token){
-        print("Token: $token");
+        print("Token firebase: $token");
     });
 
     FirebaseMessaging.instance.getInitialMessage();
@@ -70,25 +70,25 @@ class _NavState extends State<Nav> {
         items: <BottomNavyBarItem>[
           BottomNavyBarItem(
             icon: Icon(Icons.people),
-            title: Text('User'),
+            title: Text('Trang chủ'),
             activeColor: Colors.blueAccent,
             textAlign: TextAlign.center,
           ),
           BottomNavyBarItem(
             icon: Icon(Icons.add_to_home_screen),
-            title: Text('Follow'),
+            title: Text('Theo dõi'),
             activeColor: Colors.blueAccent,
             textAlign: TextAlign.center,
           ),
           BottomNavyBarItem(
             icon: Icon(Icons.send_to_mobile),
-            title: Text('Device'),
+            title: Text('Điều khiển'),
             activeColor: Colors.blueAccent,
             textAlign: TextAlign.center,
           ),
           BottomNavyBarItem(
             icon: Icon(Icons.settings),
-            title: Text('Settings'),
+            title: Text('Cài đặt'),
             activeColor: Colors.blueAccent,
             textAlign: TextAlign.center,
           ),
