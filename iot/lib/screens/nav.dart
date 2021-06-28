@@ -17,8 +17,9 @@ class _NavState extends State<Nav> {
   void initState() {
     // TODO: implement initState
     super.initState();
+
     FirebaseMessaging.instance.getToken().then((token){
-        print("Token firebase: $token");
+      print("Token firebase: $token");
     });
 
     FirebaseMessaging.instance.getInitialMessage();
@@ -36,9 +37,10 @@ class _NavState extends State<Nav> {
       }
       LocalNotificationService.display(message);
     });
-    FirebaseMessaging.onMessageOpenedApp.listen((message) {
-    });
 
+    FirebaseMessaging.onMessageOpenedApp.listen((message) {
+
+    });
   }
 
 

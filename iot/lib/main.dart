@@ -13,23 +13,12 @@ Future<void> backgroundHandler(RemoteMessage message) {
   print(message.notification.title);
   print(message.notification.body);
 }
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   LocalNotificationService.initialize();
   await Firebase.initializeApp();
   FirebaseMessaging.onBackgroundMessage(backgroundHandler);
-  // FirebaseMessaging.onMessage.listen((message) {
-  //   if (message.notification != null){
-  //     print(message.notification.body);
-  //     print(message.notification.title);
-  //   }
-  //   LocalNotificationService.display(message);
-  // });
-  // FirebaseMessaging.onMessageOpenedApp.listen((message) {
-  // });
-  // FirebaseMessaging.instance.getToken().then((token){
-  //   print("Token firebase: $token");
-  // });
   runApp(MyApp());
 }
 
