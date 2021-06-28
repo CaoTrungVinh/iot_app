@@ -13,35 +13,35 @@ class Nav extends StatefulWidget {
 }
 class _NavState extends State<Nav> {
 
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-
-    FirebaseMessaging.instance.getToken().then((token){
-      print("Token firebase: $token");
-    });
-
-    FirebaseMessaging.instance.getInitialMessage();
+  // @override
+  // void initState() {
+  //   // TODO: implement initState
+  //   super.initState();
+  //
+  //   FirebaseMessaging.instance.getToken().then((token){
+  //     print("Token firebase: $token");
+  //   });
+  //
+  //   FirebaseMessaging.instance.getInitialMessage();
     // FirebaseMessaging.instance.getInitialMessage().then((message) {
     //   if (message != null){
     //     final routerFromMessage = message.data["route"];
     //     Navigator.of(context).pushNamed(routerFromMessage);
     //   }
     // });
-
-    FirebaseMessaging.onMessage.listen((message) {
-      if (message.notification != null){
-        print(message.notification.body);
-        print(message.notification.title);
-      }
-      LocalNotificationService.display(message);
-    });
-
-    FirebaseMessaging.onMessageOpenedApp.listen((message) {
-
-    });
-  }
+  //
+  //   FirebaseMessaging.onMessage.listen((message) {
+  //     if (message.notification != null){
+  //       print(message.notification.body);
+  //       print(message.notification.title);
+  //     }
+  //     LocalNotificationService.display(message);
+  //   });
+  //
+  //   FirebaseMessaging.onMessageOpenedApp.listen((message) {
+  //
+  //   });
+  // }
 
 
 

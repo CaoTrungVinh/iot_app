@@ -19,6 +19,17 @@ void main() async {
   LocalNotificationService.initialize();
   await Firebase.initializeApp();
   FirebaseMessaging.onBackgroundMessage(backgroundHandler);
+  FirebaseMessaging.instance.getToken().then((token){
+    print("Token firebase: $token");
+  });
+  FirebaseMessaging.onMessage.listen((message) {
+    if (message.notification != null){
+      print(message.notification.body);
+      print(message.notification.title);
+    }
+    LocalNotificationService.display(message);
+  });
+  FirebaseMessaging.instance.getInitialMessage();
   runApp(MyApp());
 }
 
@@ -33,7 +44,7 @@ class MyApp extends StatelessWidget {
       Brightness.dark, //navigation bar icons' color
     ));
     return MaterialApp(
-      home: Nav(),
+      home: WelcomeScreen(),
       debugShowCheckedModeBanner: false,
     );
   }
