@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:iot/setting/about.dart';
 import 'package:iot/setting/notification_ph.dart';
 import 'package:iot/setting/notification_temp.dart';
 
@@ -42,8 +44,8 @@ class _SettingScreenState extends State<SettingScreen> {
             height: 160,
           ),
           Container(
-            height: 300,
-            // color: Colors.white70,
+            height: 110,
+            color: Colors.white,
             child: ListView(
               children: ListTile.divideTiles(
                 context: context,
@@ -55,14 +57,62 @@ class _SettingScreenState extends State<SettingScreen> {
             ),
           ),
           Container(
-            margin: EdgeInsets.fromLTRB(10.0, 0.0, 15.0, 0.0),
+            margin: EdgeInsets.fromLTRB(0, 10, 0, 0),
+            height: 165,
+            color: Colors.white,
+            child: ListView(
+              children: ListTile.divideTiles(
+                context: context,
+                tiles: [
+                  ListTile(
+                    title: Text(
+                      'Điều khoản và sử dụng',
+                      style: TextStyle(color: Colors.black),
+                    ),
+                    trailing: Icon(Icons.chevron_right),
+                  ),
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) =>
+                              About_Screen(),
+                        ),
+                      );
+                    },
+                    child: ListTile(
+                      title: Text(
+                        'Giới thiệu',
+                        style: TextStyle(color: Colors.black),
+                      ),
+                      trailing: Icon(Icons.chevron_right),
+                    ),
+                  ),
+                  GestureDetector(
+                    onTap: () {
+                          _showDialogExit(context);
+                    },
+                    child: ListTile(
+                      title: Text(
+                        'Thoát',
+                        style: TextStyle(color: Colors.black),
+                      ),
+                      trailing: Icon(Icons.chevron_right),
+                    ),
+                  ),
+                ],
+              ).toList(),
+            ),
+          ),
+          Container(
+            margin: EdgeInsets.fromLTRB(10.0, 20.0, 15.0, 0.0),
             // width: 1000,
             child: RaisedButton(
               onPressed: () {},
               elevation: 5,
               padding: EdgeInsets.all(15),
-              shape:
-                  RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(15)),
               color: Colors.blueAccent,
               child: Text('ĐĂNG XUẤT',
                   style: TextStyle(
@@ -73,6 +123,37 @@ class _SettingScreenState extends State<SettingScreen> {
           ),
         ],
       ),
+    );
+  }
+  _showDialogExit(BuildContext context) {
+    return showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('CV cảnh báo'),
+          content: SingleChildScrollView(
+            child: ListBody(
+              children: <Widget>[
+                Text('Bạn có thực sự muốn thoát'),
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            FlatButton(
+              child: Text('Huỷ bỏ'),
+              onPressed: () {
+                Navigator.of(context).pop(false);
+              },
+            ),
+            FlatButton(
+              child: Text('Thoát'),
+              onPressed: () async {
+                SystemNavigator.pop();
+              },
+            ),
+          ],
+        );
+      },
     );
   }
 }

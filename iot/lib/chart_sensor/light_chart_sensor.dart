@@ -1,27 +1,26 @@
 import 'package:flutter/material.dart';
-import 'package:iot/model/temp_model.dart';
-import 'package:iot/network/request_temp.dart';
-import 'package:iot/warnings/temp_warning.dart';
+import 'package:iot/model/light_model.dart';
+import 'package:iot/network/request_light.dart';
 
-class Temp_Chart_Screen extends StatefulWidget {
-  const Temp_Chart_Screen({Key key}) : super(key: key);
+class Light_Chart_Screen extends StatefulWidget {
+  const Light_Chart_Screen({Key key}) : super(key: key);
 
   @override
-  _Temp_Chart_ScreenState createState() => _Temp_Chart_ScreenState();
+  _Light_Chart_ScreenState createState() => _Light_Chart_ScreenState();
 }
 
-class _Temp_Chart_ScreenState extends State<Temp_Chart_Screen> {
-  List<Temp_Model> temp_data = List();
+class _Light_Chart_ScreenState extends State<Light_Chart_Screen> {
+  List<Light_Model> light_data = List();
   bool isLoading = false;
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    Request_Temp.fetchTemp().then((dataFromServer) {
+    Request_Light.fetchLight().then((dataFromServer) {
       setState(() {
-        temp_data = dataFromServer;
-        print(temp_data.length);
+        light_data = dataFromServer;
+        print(light_data.length);
       });
     });
   }
@@ -39,7 +38,7 @@ class _Temp_Chart_ScreenState extends State<Temp_Chart_Screen> {
               Navigator.pop(context);
             }),
         title: Text(
-          'Nhiệt độ',
+          'Ánh sáng',
           style: TextStyle(
             fontSize: 16,
             color: Colors.black,
@@ -48,11 +47,8 @@ class _Temp_Chart_ScreenState extends State<Temp_Chart_Screen> {
         backgroundColor: Colors.white,
         centerTitle: true,
       ),
-      body: Column(
-        children: [
-          Container(
-            height: 490,
-            child: Column(
+      body:
+          Column(
               children: [
                 Container(
                   height: 40,
@@ -74,14 +70,14 @@ class _Temp_Chart_ScreenState extends State<Temp_Chart_Screen> {
                     ],
                   ),
                 ),
-                temp_data.isEmpty
+                light_data.isEmpty
                     ? Center(child: CircularProgressIndicator())
                     : Container(
                   margin: EdgeInsets.fromLTRB(10.0, 0.0, 10.0, 0.0),
-                  height: 450,
+                  height: 510,
                   // color: Colors.white,
                   child: ListView.builder(
-                      itemCount: temp_data.length,
+                      itemCount: light_data.length,
                       itemBuilder: (context, index) {
                         int stt = index + 1;
                         String count = stt.toString();
@@ -94,8 +90,11 @@ class _Temp_Chart_ScreenState extends State<Temp_Chart_Screen> {
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
                                 Text(count),
-                                Text('${temp_data[index].temperature}'),
-                                Text('${temp_data[index].createdAt}'),
+                                '${light_data[index].description}'
+                                    .contains("Night")
+                                    ? Text("Buổi tối")
+                                    : Text("Buổi sáng"),
+                                Text('${light_data[index].createdAt}'),
                               ],
                             ),
                           ),
@@ -104,32 +103,6 @@ class _Temp_Chart_ScreenState extends State<Temp_Chart_Screen> {
                 ),
               ],
             ),
-          ),
-          Container(
-            margin: EdgeInsets.fromLTRB(10.0, 10.0, 10.0, 0.0),
-            width: 1000,
-            child: RaisedButton(
-              onPressed: () => {
-                Navigator.of(context).push(
-                  MaterialPageRoute(
-                    builder: (context) => Temp_Warning(),
-                  ),
-                )
-              },
-              elevation: 5,
-              padding: EdgeInsets.all(15),
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(15)),
-              color: Colors.blueAccent,
-              child: Text('CẢNH BÁO NHIỆT ĐỘ',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 15,
-                  )),
-            ),
-          ),
-        ],
-      ),
     );
   }
 }

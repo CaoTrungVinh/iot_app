@@ -4,7 +4,6 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:iot/authentication/Welcome/welcome_screen.dart';
 import 'package:iot/push_notifications/local_notification_service.dart';
 import 'package:iot/screens/nav.dart';
 
@@ -44,7 +43,7 @@ class MyApp extends StatelessWidget {
       Brightness.dark, //navigation bar icons' color
     ));
     return MaterialApp(
-      home: WelcomeScreen(),
+      home: Nav(),
       debugShowCheckedModeBanner: false,
     );
   }

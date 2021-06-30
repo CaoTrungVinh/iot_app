@@ -1,5 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:iot/chart_sensor/light_chart_sensor.dart';
+import 'package:iot/chart_sensor/temp_chart_sensor.dart';
 import 'package:iot/network/get_data.dart';
 import 'package:iot/network/network.dart';
 import 'package:dio/dio.dart';
@@ -100,7 +102,14 @@ class _Light_SensorState extends State<Light_Sensor> {
                               ),
                               FlatButton (
                                 child: Text("Chi tiết"),
-                                onPressed: () => {},
+                                onPressed: () => {
+                                  Navigator.of(context).push(
+                                    MaterialPageRoute(
+                                      builder: (context) =>
+                                          Light_Chart_Screen(),
+                                    ),
+                                  )
+                                },
                                 color: Colors.blue,
                                 textColor: Colors.white,
                               ),
@@ -131,7 +140,14 @@ class _Light_SensorState extends State<Light_Sensor> {
                               ),
                               FlatButton (
                                 child: Text("Chi tiết"),
-                                onPressed: () => {},
+                                onPressed: () => {
+                                  Navigator.of(context).push(
+                                    MaterialPageRoute(
+                                      builder: (context) =>
+                                          Light_Chart_Screen(),
+                                    ),
+                                  )
+                                },
                                 color: Colors.blue,
                                 textColor: Colors.white,
                               ),

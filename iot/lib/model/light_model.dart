@@ -1,8 +1,8 @@
 class Light_Model {
   int id;
-  String light;
+  int light;
   String description;
-  Null createdAt;
+  String createdAt;
   Null updatedAt;
 
   Light_Model(

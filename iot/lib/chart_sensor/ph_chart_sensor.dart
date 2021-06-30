@@ -1,119 +1,135 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:syncfusion_flutter_charts/charts.dart';
-import 'package:intl/intl.dart';
+import 'package:iot/model/ph_model.dart';
+import 'package:iot/network/request_ph.dart';
+import 'package:iot/warnings/ph_warning.dart';
 
-class Ph_Chart_Screen extends StatelessWidget {
-  // This widget is the root of your application.
-  @override
-  Widget build(BuildContext context) {
-    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
-      systemNavigationBarColor: Colors.white, // navigation bar color
-      statusBarColor: Colors.transparent, // status bar color
-      statusBarIconBrightness: Brightness.dark, // status bar icons' color
-      systemNavigationBarIconBrightness:
-          Brightness.dark, //navigation bar icons' color
-    ));
-    return MaterialApp(
-      home: Ph_Chart(),
-    );
-  }
-}
-
-class Ph_Chart extends StatefulWidget {
-  Ph_Chart({Key key, this.title}) : super(key: key);
-
-  final String title;
+class Ph_Chart_Screen extends StatefulWidget {
+  const Ph_Chart_Screen({Key key}) : super(key: key);
 
   @override
-  _Ph_ChartState createState() => _Ph_ChartState();
+  _Ph_Chart_ScreenState createState() => _Ph_Chart_ScreenState();
 }
 
-class _Ph_ChartState extends State<Ph_Chart> {
-  List<SalesData> _chartData;
-  TooltipBehavior _tooltipBehavior;
+class _Ph_Chart_ScreenState extends State<Ph_Chart_Screen> {
+  List<PH_Model> ph_data = List();
+  bool isLoading = false;
 
   @override
   void initState() {
-    _chartData = getChartData();
-    _tooltipBehavior = TooltipBehavior(enable: true);
+    // TODO: implement initState
     super.initState();
+    Request_Ph.fetchPh().then((dataFromServer) {
+      setState(() {
+        ph_data = dataFromServer;
+        print(ph_data.length);
+      });
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: SafeArea(
-          child: SfCartesianChart(
-            title: ChartTitle(text: 'Temperature chart'),
-            // legend: Legend(isVisible: true),
-            tooltipBehavior: _tooltipBehavior,
-            series: <ChartSeries>[
-              LineSeries<SalesData, double>(
-                  name: 'Sales',
-                  dataSource: _chartData,
-                  xValueMapper: (SalesData sales, _) => sales.year,
-                  yValueMapper: (SalesData sales, _) => sales.sales,
-                  dataLabelSettings: DataLabelSettings(isVisible: true),
-                  enableTooltip: true)
-            ],
-            primaryXAxis: NumericAxis(
-              edgeLabelPlacement: EdgeLabelPlacement.shift,
+      appBar: AppBar(
+        leading: IconButton(
+            icon: Icon(
+              Icons.arrow_back_ios,
+              color: Color(0xff2E3A59),
             ),
-            primaryYAxis: NumericAxis(
-                labelFormat: '{value}*C',
-                numberFormat: NumberFormat.simpleCurrency(decimalDigits: 0)),
+            onPressed: () {
+              Navigator.pop(context);
+            }),
+        title: Text(
+          'Độ Ph',
+          style: TextStyle(
+            fontSize: 16,
+            color: Colors.black,
+          ), //style of title
+        ), //title
+        backgroundColor: Colors.white,
+        centerTitle: true,
+      ),
+      body: Column(
+        children: [
+          Container(
+            height: 490,
+            child: Column(
+              children: [
+                Container(
+                  height: 40,
+                  child: Row(
+                    children: [
+                      Container(
+                          margin: EdgeInsets.fromLTRB(20, 0, 0, 0),
+                          child: Text('STT',
+                              style: TextStyle(
+                                  fontSize: 15, fontWeight: FontWeight.bold))),
+                      Container(
+                          margin: EdgeInsets.fromLTRB(40, 0, 90, 0),
+                          child: Text("Dữ liệu đo",
+                              style: TextStyle(
+                                  fontSize: 15, fontWeight: FontWeight.bold))),
+                      Text('Giờ đo',
+                          style: TextStyle(
+                              fontSize: 15, fontWeight: FontWeight.bold)),
+                    ],
+                  ),
+                ),
+                ph_data.isEmpty
+                    ? Center(child: CircularProgressIndicator())
+                    : Container(
+                        margin: EdgeInsets.fromLTRB(10.0, 0.0, 10.0, 0.0),
+                        height: 450,
+                        // color: Colors.white,
+                        child: ListView.builder(
+                            itemCount: ph_data.length,
+                            itemBuilder: (context, index) {
+                              int stt = index + 1;
+                              String count = stt.toString();
+                              return Card(
+                                child: Container(
+                                  padding: EdgeInsets.all(16),
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    crossAxisAlignment: CrossAxisAlignment.center,
+                                    children: [
+                                      Text(count),
+                                      Text('${ph_data[index].value}'),
+                                      Text('${ph_data[index].createdAt}'),
+                                    ],
+                                  ),
+                                ),
+                              );
+                            }),
+                      ),
+              ],
+            ),
           ),
-        )
+          Container(
+            margin: EdgeInsets.fromLTRB(10.0, 10.0, 10.0, 0.0),
+            width: 1000,
+            child: RaisedButton(
+              onPressed: () => {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) => Ph_Warning(),
+                  ),
+                )
+              },
+              elevation: 5,
+              padding: EdgeInsets.all(15),
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(15)),
+              color: Colors.blueAccent,
+              child: Text('CẢNH BÁO ĐỘ PH',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 15,
+                  )),
+            ),
+          ),
+        ],
+      ),
     );
   }
-
-  List<SalesData> getChartData() {
-    final List<SalesData> chartData = [
-      SalesData(2017, 25),
-      SalesData(2018, 12),
-      SalesData(2019, 24),
-      SalesData(2020, 18),
-      SalesData(2021, 30),
-      SalesData(2022, 12.5),
-      SalesData(2023, 24),
-      SalesData(2024, 38),
-      SalesData(2025, 30),
-      SalesData(2026, 25),
-      SalesData(2027, 34),
-      SalesData(2028, 24),
-      SalesData(2029, 18),
-      SalesData(2030, 30),
-      SalesData(2031, 12),
-      SalesData(2032, 24),
-      SalesData(2033, 18),
-      SalesData(2034, 30),
-      SalesData(2035, 25),
-      SalesData(2036, 12),
-      SalesData(2037, 24),
-      SalesData(2038, 18),
-      SalesData(2039, 30),
-      SalesData(2040, 12),
-      SalesData(2041, 24),
-      SalesData(2042, 18),
-      SalesData(2043, 30),
-      SalesData(2044, 25),
-      SalesData(2045, 12),
-      SalesData(2046, 24),
-      SalesData(2047, 18),
-      SalesData(2048, 30),
-      SalesData(2049, 12),
-      SalesData(2050, 24),
-      SalesData(2051, 18),
-      SalesData(2052, 50),
-    ];
-    return chartData;
-  }
-}
-
-class SalesData {
-  SalesData(this.year, this.sales);
-
-  final double year;
-  final double sales;
 }

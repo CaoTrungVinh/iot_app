@@ -13,7 +13,6 @@ class _SplashScreenState extends State<SplashScreen> {
   Widget build(BuildContext context) {
     return initScreen(context);
   }
-
   @override
   void initState() {
     super.initState();
@@ -21,15 +20,9 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   init() async {
-    // Navigator.of(context).pushReplacement(
-    //   MaterialPageRoute(
-    //     builder: (context) => Nav(),
-    //   ),
-    // );
-    Navigator.of(context).push(
+    Navigator.of(context).pushReplacement(
       MaterialPageRoute(
-        builder: (context) =>
-            Nav(),
+        builder: (context) => Nav(),
       ),
     );
   }
@@ -41,9 +34,11 @@ class _SplashScreenState extends State<SplashScreen> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            // Container(
-            //   child: Image.asset("assets/images/logo.png"),
-            // ),
+            Container(
+              width: 200,
+              height: 200,
+              child: Image.asset("assets/images/logo.png"),
+            ),
             Padding(padding: EdgeInsets.only(top: 20.0)),
             Text(
               "CV",
