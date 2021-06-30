@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:iot/network/shared_service.dart';
 import 'package:iot/setting/about.dart';
 import 'package:iot/setting/notification_ph.dart';
 import 'package:iot/setting/notification_temp.dart';
@@ -108,7 +109,9 @@ class _SettingScreenState extends State<SettingScreen> {
             margin: EdgeInsets.fromLTRB(10.0, 20.0, 15.0, 0.0),
             // width: 1000,
             child: RaisedButton(
-              onPressed: () {},
+              onPressed: () {
+                _showDialogLogout(context);
+              },
               elevation: 5,
               padding: EdgeInsets.all(15),
               shape: RoundedRectangleBorder(
@@ -149,6 +152,38 @@ class _SettingScreenState extends State<SettingScreen> {
               child: Text('Thoát'),
               onPressed: () async {
                 SystemNavigator.pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  _showDialogLogout(BuildContext context) {
+    return showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('CV cảnh báo'),
+          content: SingleChildScrollView(
+            child: ListBody(
+              children: <Widget>[
+                Text('Bạn có thực sự đăng xuất'),
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            FlatButton(
+              child: Text('Huỷ bỏ'),
+              onPressed: () {
+                Navigator.of(context).pop(false);
+              },
+            ),
+            FlatButton(
+              child: Text('Đăng xuất'),
+              onPressed: () async {
+                SharedService.logout(context);
               },
             ),
           ],

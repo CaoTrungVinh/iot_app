@@ -26,11 +26,11 @@ dependencies:
   http: ^0.12.2
   dio: ^3.0.10
   date_format: ^2.0.2
-
   firebase_messaging: ^10.0.1
   firebase_core: ^1.2.1
   flutter_local_notifications: ^6.0.0
-  flutter_svg: ^0.22.0
+  shared_preferences: ^2.0.6
+#  flutter_svg: ^0.22.0
 
 dev_dependencies:
   flutter_test:
@@ -58,11 +58,6 @@ flutter:
      - assets/images/canhbao_temp.png
      - assets/images/canhbao_ph.png
      - assets/images/logo.png
-     - assets/images/auth_back.jpg
-     - assets/images/login_bottom.png
-     - assets/images/main_bottom.png
-     - assets/images/main_top.png
-     - assets/images/signup_top.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

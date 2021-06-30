@@ -4,6 +4,8 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:iot/authentication/login_page.dart';
+import 'package:iot/network/shared_service.dart';
 import 'package:iot/push_notifications/local_notification_service.dart';
 import 'package:iot/screens/nav.dart';
 
@@ -12,6 +14,7 @@ Future<void> backgroundHandler(RemoteMessage message) {
   print(message.notification.title);
   print(message.notification.body);
 }
+Widget _defaultHome = new LoginPage();
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -29,6 +32,12 @@ void main() async {
     LocalNotificationService.display(message);
   });
   FirebaseMessaging.instance.getInitialMessage();
+
+  bool _result = await SharedService.isLoggedIn();
+  if (_result){
+    _defaultHome = new Nav();
+  }
+
   runApp(MyApp());
 }
 
@@ -43,8 +52,13 @@ class MyApp extends StatelessWidget {
       Brightness.dark, //navigation bar icons' color
     ));
     return MaterialApp(
-      home: Nav(),
+      home: _defaultHome,
       debugShowCheckedModeBanner: false,
+      routes: <String, WidgetBuilder>{
+        '/home': (BuildContext context) => new Nav(),
+        '/login': (BuildContext context) => new LoginPage(),
+
+      },
     );
   }
 }
