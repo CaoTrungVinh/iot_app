@@ -39,11 +39,13 @@ class _SettingScreenState extends State<SettingScreen> {
       margin: EdgeInsets.fromLTRB(5.0, 0.0, 0.0, 0.0),
       child: ListView(
         children: [
+          SizedBox(height: 15,),
           Image(
             image: AssetImage('assets/images/logo.png'),
             width: 160,
             height: 160,
           ),
+          SizedBox(height: 15,),
           Container(
             height: 110,
             color: Colors.white,

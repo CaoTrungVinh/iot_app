@@ -28,6 +28,4 @@ class APIServices{
     print('199');
     return false;
   }
-
-
 }
