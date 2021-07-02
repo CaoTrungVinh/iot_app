@@ -35,14 +35,30 @@ class User {
   int id;
   String email;
   String name;
+  String birthday;
+  int phone;
+  String gender;
+  String address;
   int roleId;
 
-  User({this.id, this.email, this.name, this.roleId});
+  User(
+      {this.id,
+        this.email,
+        this.name,
+        this.birthday,
+        this.phone,
+        this.gender,
+        this.address,
+        this.roleId});
 
   User.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     email = json['email'];
     name = json['name'];
+    birthday = json['birthday'];
+    phone = json['phone'];
+    gender = json['gender'];
+    address = json['address'];
     roleId = json['role_id'];
   }
 
@@ -51,8 +67,13 @@ class User {
     data['id'] = this.id;
     data['email'] = this.email;
     data['name'] = this.name;
+    data['birthday'] = this.birthday;
+    data['phone'] = this.phone;
+    data['gender'] = this.gender;
+    data['address'] = this.address;
     data['role_id'] = this.roleId;
     return data;
   }
 }
+
 

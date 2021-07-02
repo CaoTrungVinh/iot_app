@@ -3,8 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:iot/network/shared_service.dart';
 import 'package:iot/setting/about.dart';
-import 'package:iot/setting/notification_ph.dart';
-import 'package:iot/setting/notification_temp.dart';
 
 class SettingScreen extends StatefulWidget {
   const SettingScreen({Key key}) : super(key: key);
@@ -46,19 +44,6 @@ class _SettingScreenState extends State<SettingScreen> {
             height: 160,
           ),
           SizedBox(height: 15,),
-          Container(
-            height: 110,
-            color: Colors.white,
-            child: ListView(
-              children: ListTile.divideTiles(
-                context: context,
-                tiles: [
-                  Setting_Notification_Temp(),
-                  Setting_Notification_Ph(),
-                ],
-              ).toList(),
-            ),
-          ),
           Container(
             margin: EdgeInsets.fromLTRB(0, 10, 0, 0),
             height: 165,

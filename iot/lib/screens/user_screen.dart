@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:iot/model/utils.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 class UserScreeen extends StatefulWidget {
   @override

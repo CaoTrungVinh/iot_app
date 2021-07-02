@@ -57,7 +57,6 @@ class MyApp extends StatelessWidget {
       routes: <String, WidgetBuilder>{
         '/home': (BuildContext context) => new Nav(),
         '/login': (BuildContext context) => new LoginPage(),
-
       },
     );
   }

@@ -12,13 +12,3 @@ Future set_warning_temp(int warning) async {
           headers: {'Content-type': 'application/json; charset=UTF-8'}));
   return response.data;
 }
-
-Future set_warning_ph(int warning) async {
-  final String paturl = url + 'set_warning_ph';
-  dynamic data = {'warning_id': warning};
-  var response = await dio.put(paturl,
-      data: data,
-      options: Options(
-          headers: {'Content-type': 'application/json; charset=UTF-8'}));
-  return response.data;
-}

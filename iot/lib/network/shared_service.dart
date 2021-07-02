@@ -8,6 +8,7 @@ class SharedService {
   static Future<bool> isLoggedIn() async {
     final prefs = await SharedPreferences.getInstance();
     // return prefs.getString("login_details") != null ? true : false;
+    print(prefs.getInt("id_user"));
     return prefs.getInt("login_details") == 1 ? true : false;
   }
 
@@ -26,6 +27,8 @@ class SharedService {
     final prefs = await SharedPreferences.getInstance();
     if (responseModel != null){
       prefs.setInt("login_details", 1);
+      prefs.setInt("id_user", responseModel.user.id);
+      print(responseModel.user.id);
     }else{
       prefs.setInt("login_details", 0);
     }
