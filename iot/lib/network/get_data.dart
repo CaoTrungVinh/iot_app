@@ -1,10 +1,13 @@
 import 'package:dio/dio.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'network.dart';
 
 Dio dio = new Dio();
 
-Future getDataTempAll() async {
-  final String pathUrl = url + 'datatemp';
+Future getPond() async {
+  final prefs = await SharedPreferences.getInstance();
+  int id_user = prefs.getInt("id_user");
+  final String pathUrl = url + 'pond?user=' + '$id_user';
   dio.interceptors
       .add(InterceptorsWrapper(onRequest: (RequestOptions option) async {
     var headers = {
