@@ -1,28 +1,36 @@
 class PH_Model {
   int id;
-  int idWarning;
   double value;
+  double phMin;
+  double phMax;
+  int warning;
   String createdAt;
-  Null updatedAt;
 
   PH_Model(
-      {this.id, this.idWarning, this.value, this.createdAt, this.updatedAt});
+      {this.id,
+        this.value,
+        this.phMin,
+        this.phMax,
+        this.warning,
+        this.createdAt});
 
   PH_Model.fromJson(Map<String, dynamic> json) {
     id = json['id'];
-    idWarning = json['id_warning'];
     value = double.tryParse(json['value'].toString());
+    phMin = double.tryParse(json['ph_min'].toString());
+    phMax = double.tryParse(json['ph_max'].toString());
+    warning = json['warning'];
     createdAt = json['created_at'];
-    updatedAt = json['updated_at'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['id'] = this.id;
-    data['id_warning'] = this.idWarning;
     data['value'] = this.value;
+    data['ph_min'] = this.phMin;
+    data['ph_max'] = this.phMax;
+    data['warning'] = this.warning;
     data['created_at'] = this.createdAt;
-    data['updated_at'] = this.updatedAt;
     return data;
   }
 }

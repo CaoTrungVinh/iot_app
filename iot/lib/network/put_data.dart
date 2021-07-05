@@ -1,11 +1,67 @@
 import 'package:dio/dio.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'network.dart';
 
 Dio dio = new Dio();
 
-Future set_warning_temp(int warning) async {
-  final String paturl = url + 'set_warning_temp';
-  dynamic data = {'warning_id': warning};
+Future setTempWarning(double min, double max) async {
+  final prefs = await SharedPreferences.getInstance();
+  int id_toolkit = prefs.getInt("id_temp");
+  final String paturl = url + 'setWarningTemp?id=' + '$id_toolkit';
+
+  dynamic data = {'temperature_min': min, 'temperature_max': max};
+  var response = await dio.put(paturl,
+      data: data,
+      options: Options(
+          headers: {'Content-type': 'application/json; charset=UTF-8'}));
+  return response.data;
+}
+
+Future setPhWarning(double min, double max) async {
+  final prefs = await SharedPreferences.getInstance();
+  int id_toolkit = prefs.getInt("id_ph");
+  final String paturl = url + 'setWarningPh?id=' + '$id_toolkit';
+
+  dynamic data = {'ph_min': min, 'ph_max': max};
+  var response = await dio.put(paturl,
+      data: data,
+      options: Options(
+          headers: {'Content-type': 'application/json; charset=UTF-8'}));
+  return response.data;
+}
+
+Future setTempWarning_OnOff(int warning) async {
+  final prefs = await SharedPreferences.getInstance();
+  int id_toolkit = prefs.getInt("id_temp");
+  final String paturl = url + 'setWarningTemp_onoff?id=' + '$id_toolkit';
+
+  dynamic data = {'warning': warning};
+  var response = await dio.put(paturl,
+      data: data,
+      options: Options(
+          headers: {'Content-type': 'application/json; charset=UTF-8'}));
+  return response.data;
+}
+
+Future setPhWarning_OnOff(int warning) async {
+  final prefs = await SharedPreferences.getInstance();
+  int id_toolkit = prefs.getInt("id_ph");
+  final String paturl = url + 'setWarningPh_onoff?id=' + '$id_toolkit';
+
+  dynamic data = {'warning': warning};
+  var response = await dio.put(paturl,
+      data: data,
+      options: Options(
+          headers: {'Content-type': 'application/json; charset=UTF-8'}));
+  return response.data;
+}
+
+Future setPumpIn_OnOff(int status) async {
+  final prefs = await SharedPreferences.getInstance();
+  int id_control = prefs.getInt("id_pump_in");
+  final String paturl = url + 'setPumpIn_onoff?id=' + '$id_control';
+
+  dynamic data = {'status': status};
   var response = await dio.put(paturl,
       data: data,
       options: Options(

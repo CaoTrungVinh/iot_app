@@ -14,6 +14,7 @@ Future<void> backgroundHandler(RemoteMessage message) {
   print(message.notification.title);
   print(message.notification.body);
 }
+
 Widget _defaultHome = new LoginPage();
 
 void main() async {
@@ -21,11 +22,11 @@ void main() async {
   LocalNotificationService.initialize();
   await Firebase.initializeApp();
   FirebaseMessaging.onBackgroundMessage(backgroundHandler);
-  FirebaseMessaging.instance.getToken().then((token){
+  FirebaseMessaging.instance.getToken().then((token) {
     print("Token firebase: $token");
   });
   FirebaseMessaging.onMessage.listen((message) {
-    if (message.notification != null){
+    if (message.notification != null) {
       print(message.notification.body);
       print(message.notification.title);
     }
@@ -34,7 +35,7 @@ void main() async {
   FirebaseMessaging.instance.getInitialMessage();
 
   bool _result = await SharedService.isLoggedIn();
-  if (_result){
+  if (_result) {
     _defaultHome = new Nav();
   }
 
@@ -49,7 +50,7 @@ class MyApp extends StatelessWidget {
       statusBarColor: Colors.transparent, // status bar color
       statusBarIconBrightness: Brightness.dark, // status bar icons' color
       systemNavigationBarIconBrightness:
-      Brightness.dark, //navigation bar icons' color
+          Brightness.dark, //navigation bar icons' color
     ));
     return MaterialApp(
       home: _defaultHome,

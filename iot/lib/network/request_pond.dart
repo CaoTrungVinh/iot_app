@@ -14,10 +14,11 @@ class Request_Pond {
     return get;
   }
 
-  static Future<List<Pond_Model>> fetchPond({int page = 1}) async {
+  static Future<List<Pond_Model>> fetchPond() async {
     final prefs = await SharedPreferences.getInstance();
     int id_user = prefs.getInt("id_user");
     final String urls = url + 'pond?user=' + '$id_user';
+    // final String urls = url + 'pond?user=4';
 
     final response = await http.get('$urls');
     if (response.statusCode == 200) {
