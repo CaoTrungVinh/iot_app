@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:iot/devices/device_lamp.dart';
+import 'package:iot/devices/device_oxygen_fan.dart';
 import 'package:iot/devices/device_pump_in.dart';
+import 'package:iot/devices/device_pump_out.dart';
 
 class DeviceScreen extends StatefulWidget {
   const DeviceScreen({Key key}) : super(key: key);
@@ -37,18 +40,21 @@ class _DeviceScreenState extends State<DeviceScreen> {
       ),
       body: Column(
         children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              Device_PumpIn(),
-              // Device_PumpOut(),
-            ],
+          Container(
+            margin: EdgeInsets.only(top: 15, bottom: 15),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                Device_PumpIn(),
+                Device_PumpOut(),
+              ],
+            ),
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              // Device_Light(),
-              // Device_Oxy(),
+              Device_Lamp(),
+              Device_Oxy()
             ],
           ),
         ],

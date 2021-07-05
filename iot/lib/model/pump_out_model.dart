@@ -1,13 +1,13 @@
-class PumpIn_Model {
+class PumpOut_Model {
   int id;
   int status;
   String timerOn;
   String timerOff;
 
-  PumpIn_Model(
+  PumpOut_Model(
       {this.id, this.status, this.timerOn, this.timerOff});
 
-  PumpIn_Model.fromJson(Map<String, dynamic> json) {
+  PumpOut_Model.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     status = json['status'];
     timerOn = json['timer_on'];

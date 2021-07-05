@@ -68,3 +68,42 @@ Future setPumpIn_OnOff(int status) async {
           headers: {'Content-type': 'application/json; charset=UTF-8'}));
   return response.data;
 }
+
+Future setPumpOut_OnOff(int status) async {
+  final prefs = await SharedPreferences.getInstance();
+  int id_control = prefs.getInt("id_pump_out");
+  final String paturl = url + 'setPumpOut_onoff?id=' + '$id_control';
+
+  dynamic data = {'status': status};
+  var response = await dio.put(paturl,
+      data: data,
+      options: Options(
+          headers: {'Content-type': 'application/json; charset=UTF-8'}));
+  return response.data;
+}
+
+Future setLamp_OnOff(int status) async {
+  final prefs = await SharedPreferences.getInstance();
+  int id_control = prefs.getInt("id_lamp");
+  final String paturl = url + 'setLamp_onoff?id=' + '$id_control';
+
+  dynamic data = {'status': status};
+  var response = await dio.put(paturl,
+      data: data,
+      options: Options(
+          headers: {'Content-type': 'application/json; charset=UTF-8'}));
+  return response.data;
+}
+
+Future setOxygen_OnOff(int status) async {
+  final prefs = await SharedPreferences.getInstance();
+  int id_control = prefs.getInt("id_oxygen_fan");
+  final String paturl = url + 'setOxygen_fan_onoff?id=' + '$id_control';
+
+  dynamic data = {'status': status};
+  var response = await dio.put(paturl,
+      data: data,
+      options: Options(
+          headers: {'Content-type': 'application/json; charset=UTF-8'}));
+  return response.data;
+}

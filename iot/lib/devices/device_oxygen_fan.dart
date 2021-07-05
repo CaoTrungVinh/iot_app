@@ -1,34 +1,35 @@
 import 'package:flutter/material.dart';
-import 'package:iot/model/pump_in_model.dart';
+import 'package:iot/model/oxygen_fan_model.dart';
 import 'package:iot/network/present_time.dart';
 import 'package:iot/network/put_data.dart';
-import 'package:iot/network/request_pump_in.dart';
+import 'package:iot/network/request_oxygen_fan.dart';
 
-class Device_PumpIn extends StatefulWidget {
-  const Device_PumpIn({Key key}) : super(key: key);
+class Device_Oxy extends StatefulWidget {
+  const Device_Oxy({Key key}) : super(key: key);
 
   @override
-  _Device_PumpInState createState() => _Device_PumpInState();
+  _Device_OxyState createState() => _Device_OxyState();
 }
 
-class _Device_PumpInState extends State<Device_PumpIn> {
-  List<PumpIn_Model> model_data = List();
+class _Device_OxyState extends State<Device_Oxy> {
+  List<Oxygen_Fan_Model> model_data = List();
   bool isLoading = false;
-  bool isSwitchedBomIn = false;
   int control;
   String description = '';
-  var textValueBomIn = 'Switch is OFF';
+
+  bool isSwitchedGraphic = false;
+  var textValueGraphic = 'Switch is OFF';
 
   @override
   void initState() {
     super.initState();
-    get_pump_in_data();
+    get_oxygen_fan_data();
   }
 
-  Future<void> get_pump_in_data() async {
+  Future<void> get_oxygen_fan_data() async {
     if (isLoading) return;
     isLoading = true;
-    await Request_PumpIn.fetchPumpIn().then(
+    await Request_Oxygen_Fan.fetchOxy().then(
       (value) {
         if (value == null) {
           isLoading = false;
@@ -36,10 +37,10 @@ class _Device_PumpInState extends State<Device_PumpIn> {
         }
         setState(() {
           model_data = value;
-          if (model_data[0].status == 1) {
-            isSwitchedBomIn = true;
+          if (model_data[0].status == 1 || model_data[0].status == 2) {
+            isSwitchedGraphic = true;
           } else if (model_data[0].status == 0) {
-            isSwitchedBomIn = false;
+            isSwitchedGraphic = false;
           }
         });
         isLoading = false;
@@ -51,25 +52,25 @@ class _Device_PumpInState extends State<Device_PumpIn> {
     );
   }
 
-  Future<void> switchBomIn(bool value) {
-    if (isSwitchedBomIn == false) {
+  void switchGraphic(bool value) {
+    if (isSwitchedGraphic == false) {
       setState(() {
-        isSwitchedBomIn = true;
-        textValueBomIn = 'Switch Button is ON';
+        isSwitchedGraphic = true;
+        textValueGraphic = 'Switch Button is ON';
         control = 1;
-        description = 'Bơm nước vào hồ nuôi cá';
-        setPumpIn_OnOff(control).then((value) {
+        description = 'Bật quạt oxy';
+        setOxygen_OnOff(control).then((value) {
           print(value);
         });
       });
       print('Switch Button is ON');
     } else {
       setState(() {
-        isSwitchedBomIn = false;
-        textValueBomIn = 'Switch Button is OFF';
+        isSwitchedGraphic = false;
+        textValueGraphic = 'Switch Button is OFF';
         control = 0;
-        description = 'Tắt máy bơm';
-        setPumpIn_OnOff(control).then((value) {
+        description = 'Tắt quạt oxy';
+        setOxygen_OnOff(control).then((value) {
           print(value);
         });
       });
@@ -92,34 +93,34 @@ class _Device_PumpInState extends State<Device_PumpIn> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
-                  "Bơm nước vào",
+                  "Quạt oxy",
                   style: TextStyle(
                       color: Colors.grey,
                       fontWeight: FontWeight.bold,
                       fontSize: 17),
                 ),
                 Image(
-                  image: AssetImage('assets/images/bomin.png'),
+                  image: AssetImage('assets/images/graphic.png'),
                   width: 70,
                   height: 70,
                 ),
                 Transform.scale(
                     scale: 1.2,
                     child: Switch(
-                      onChanged: switchBomIn,
-                      value: isSwitchedBomIn,
+                      onChanged: switchGraphic,
+                      value: isSwitchedGraphic,
                       activeColor: Colors.blue,
                       activeTrackColor: Colors.lightBlue,
                       inactiveThumbColor: Colors.grey,
                       inactiveTrackColor: Colors.grey[300],
                     )),
-                // FlatButton(
+                // FlatButton (
                 //   child: Text("Hẹn giờ"),
                 //   onPressed: () => {
                 //     Navigator.of(context).push(
                 //       MaterialPageRoute(
                 //         builder: (context) =>
-                //             Pump_In_Timer(),
+                //             Oxygen_Fan_Timer(),
                 //       ),
                 //     )
                 //   },
