@@ -107,3 +107,52 @@ Future setOxygen_OnOff(int status) async {
           headers: {'Content-type': 'application/json; charset=UTF-8'}));
   return response.data;
 }
+
+Future set_timer_pump_in(String timer_on,String timer_off) async {
+  final prefs = await SharedPreferences.getInstance();
+  int id_control = prefs.getInt("id_pump_in");
+  final String paturl = url + 'set_timer_pump_in?id=' + '$id_control';
+
+  dynamic data = {'timer_on': timer_on, 'timer_off': timer_off};
+  var response = await dio.put(paturl,
+      data: data,
+      options: Options(
+          headers: {'Content-type': 'application/json; charset=UTF-8'}));
+  return response.data;
+}
+Future set_timer_pump_out(String timer_on,String timer_off) async {
+  final prefs = await SharedPreferences.getInstance();
+  int id_control = prefs.getInt("id_pump_out");
+  final String paturl = url + 'set_timer_pump_out?id=' + '$id_control';
+
+  dynamic data = {'timer_on': timer_on, 'timer_off': timer_off};
+  var response = await dio.put(paturl,
+      data: data,
+      options: Options(
+          headers: {'Content-type': 'application/json; charset=UTF-8'}));
+  return response.data;
+}
+Future set_timer_lamp(String timer_on,String timer_off) async {
+  final prefs = await SharedPreferences.getInstance();
+  int id_control = prefs.getInt("id_lamp");
+  final String paturl = url + 'set_timer_lamp?id=' + '$id_control';
+
+  dynamic data = {'timer_on': timer_on, 'timer_off': timer_off};
+  var response = await dio.put(paturl,
+      data: data,
+      options: Options(
+          headers: {'Content-type': 'application/json; charset=UTF-8'}));
+  return response.data;
+}
+Future set_timer_oxygen_fan(String timer_on,String timer_off) async {
+  final prefs = await SharedPreferences.getInstance();
+  int id_control = prefs.getInt("id_oxygen_fan");
+  final String paturl = url + 'set_timer_oxygen_fan?id=' + '$id_control';
+
+  dynamic data = {'timer_on': timer_on, 'timer_off': timer_off};
+  var response = await dio.put(paturl,
+      data: data,
+      options: Options(
+          headers: {'Content-type': 'application/json; charset=UTF-8'}));
+  return response.data;
+}

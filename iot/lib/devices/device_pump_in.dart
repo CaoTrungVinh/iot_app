@@ -3,6 +3,7 @@ import 'package:iot/model/pump_in_model.dart';
 import 'package:iot/network/present_time.dart';
 import 'package:iot/network/put_data.dart';
 import 'package:iot/network/request_pump_in.dart';
+import 'package:iot/timers/pump_in_timer.dart';
 
 class Device_PumpIn extends StatefulWidget {
   const Device_PumpIn({Key key}) : super(key: key);
@@ -36,7 +37,7 @@ class _Device_PumpInState extends State<Device_PumpIn> {
         }
         setState(() {
           model_data = value;
-          if (model_data[0].status == 1) {
+          if (model_data[0].status == 1 || model_data[0].status == 2) {
             isSwitchedBomIn = true;
           } else if (model_data[0].status == 0) {
             isSwitchedBomIn = false;
@@ -113,19 +114,26 @@ class _Device_PumpInState extends State<Device_PumpIn> {
                       inactiveThumbColor: Colors.grey,
                       inactiveTrackColor: Colors.grey[300],
                     )),
-                // FlatButton(
-                //   child: Text("Hẹn giờ"),
-                //   onPressed: () => {
-                //     Navigator.of(context).push(
-                //       MaterialPageRoute(
-                //         builder: (context) =>
-                //             Pump_In_Timer(),
-                //       ),
-                //     )
-                //   },
-                //   color: Colors.blue,
-                //   textColor: Colors.white,
-                // )
+                FlatButton(
+                  child: model_data[0].status == 2
+                      ? Text(
+                          "Hẹn giờ",
+                          style: TextStyle(color: Colors.white),
+                        )
+                      : Text(
+                          "Hẹn giờ",
+                          style: TextStyle(color: Colors.black),
+                        ),
+                  onPressed: () => {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) => Pump_In_Timer(),
+                      ),
+                    )
+                  },
+                  color: model_data[0].status == 2 ? Colors.blue : Colors.grey[350],
+                  textColor: Colors.white,
+                )
               ],
             ),
           );

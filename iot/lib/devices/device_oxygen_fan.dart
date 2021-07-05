@@ -3,6 +3,7 @@ import 'package:iot/model/oxygen_fan_model.dart';
 import 'package:iot/network/present_time.dart';
 import 'package:iot/network/put_data.dart';
 import 'package:iot/network/request_oxygen_fan.dart';
+import 'package:iot/timers/oxygen_fan_timer.dart';
 
 class Device_Oxy extends StatefulWidget {
   const Device_Oxy({Key key}) : super(key: key);
@@ -114,19 +115,27 @@ class _Device_OxyState extends State<Device_Oxy> {
                       inactiveThumbColor: Colors.grey,
                       inactiveTrackColor: Colors.grey[300],
                     )),
-                // FlatButton (
-                //   child: Text("Hẹn giờ"),
-                //   onPressed: () => {
-                //     Navigator.of(context).push(
-                //       MaterialPageRoute(
-                //         builder: (context) =>
-                //             Oxygen_Fan_Timer(),
-                //       ),
-                //     )
-                //   },
-                //   color: Colors.blue,
-                //   textColor: Colors.white,
-                // )
+                FlatButton (
+                  child: model_data[0].status == 2
+                      ? Text(
+                    "Hẹn giờ",
+                    style: TextStyle(color: Colors.white),
+                  )
+                      : Text(
+                    "Hẹn giờ",
+                    style: TextStyle(color: Colors.black),
+                  ),
+                  onPressed: () => {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) =>
+                            Oxygen_Fan_Timer(),
+                      ),
+                    )
+                  },
+                  color: model_data[0].status == 2 ? Colors.blue : Colors.grey[350],
+                  textColor: Colors.white,
+                )
               ],
             ),
           );

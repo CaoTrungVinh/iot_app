@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:iot/model/pump_out_model.dart';
 import 'package:iot/network/put_data.dart';
 import 'package:iot/network/request_pump_out.dart';
+import 'package:iot/timers/pump_out_timer.dart';
 
 class Device_PumpOut extends StatefulWidget {
   const Device_PumpOut({Key key}) : super(key: key);
@@ -35,7 +36,7 @@ class _Device_PumpOutState extends State<Device_PumpOut> {
         }
         setState(() {
           model_data = value;
-          if (model_data[0].status == 1){
+          if (model_data[0].status == 1 || model_data[0].status == 2){
             isSwitchedBomOut = true;
           }else if (model_data[0].status == 0){
             isSwitchedBomOut = false;
@@ -110,19 +111,27 @@ class _Device_PumpOutState extends State<Device_PumpOut> {
                 inactiveThumbColor: Colors.grey,
                 inactiveTrackColor: Colors.grey[300],
               )),
-          // FlatButton(
-          //   child: Text("Hẹn giờ"),
-          //   onPressed: () => {
-          //     Navigator.of(context).push(
-          //       MaterialPageRoute(
-          //         builder: (context) =>
-          //             Pump_In_Timer(),
-          //       ),
-          //     )
-          //   },
-          //   color: Colors.blue,
-          //   textColor: Colors.white,
-          // )
+          FlatButton(
+            child: model_data[0].status == 2
+                ? Text(
+              "Hẹn giờ",
+              style: TextStyle(color: Colors.white),
+            )
+                : Text(
+              "Hẹn giờ",
+              style: TextStyle(color: Colors.black),
+            ),
+            onPressed: () => {
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (context) =>
+                      Pump_Out_Timer(),
+                ),
+              )
+            },
+            color: model_data[0].status == 2 ? Colors.blue : Colors.grey[350],
+            textColor: Colors.white,
+          )
         ],
       ),
     );

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:iot/model/lamp_model.dart';
 import 'package:iot/network/put_data.dart';
 import 'package:iot/network/request_lamp.dart';
+import 'package:iot/timers/lamp_timer.dart';
 
 class Device_Lamp extends StatefulWidget {
   const Device_Lamp({Key key}) : super(key: key);
@@ -35,7 +36,7 @@ class _Device_LampState extends State<Device_Lamp> {
         }
         setState(() {
           model_data = value;
-          if (model_data[0].status == 1){
+          if (model_data[0].status == 1 || model_data[0].status == 2){
             isSwitchedLamp = true;
           }else if (model_data[0].status == 0){
             isSwitchedLamp = false;
@@ -110,19 +111,27 @@ class _Device_LampState extends State<Device_Lamp> {
                 inactiveThumbColor: Colors.grey,
                 inactiveTrackColor: Colors.grey[300],
               )),
-          // FlatButton(
-          //   child: Text("Hẹn giờ"),
-          //   onPressed: () => {
-          //     Navigator.of(context).push(
-          //       MaterialPageRoute(
-          //         builder: (context) =>
-          //             Pump_In_Timer(),
-          //       ),
-          //     )
-          //   },
-          //   color: Colors.blue,
-          //   textColor: Colors.white,
-          // )
+          FlatButton(
+            child: model_data[0].status == 2
+                ? Text(
+              "Hẹn giờ",
+              style: TextStyle(color: Colors.white),
+            )
+                : Text(
+              "Hẹn giờ",
+              style: TextStyle(color: Colors.black),
+            ),
+            onPressed: () => {
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (context) =>
+                      Lamp_Timer(),
+                ),
+              )
+            },
+            color: model_data[0].status == 2 ? Colors.blue : Colors.grey[350],
+            textColor: Colors.white,
+          )
         ],
       ),
     );
