@@ -2,18 +2,22 @@ class Light_Model {
   int id;
   int light;
   String description;
+  int warning;
   String createdAt;
-  Null updatedAt;
 
   Light_Model(
-      {this.id, this.light, this.description, this.createdAt, this.updatedAt});
+      {this.id,
+        this.light,
+        this.description,
+        this.warning,
+        this.createdAt});
 
   Light_Model.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     light = json['light'];
     description = json['description'];
+    warning = json['warning'];
     createdAt = json['created_at'];
-    updatedAt = json['updated_at'];
   }
 
   Map<String, dynamic> toJson() {
@@ -21,8 +25,8 @@ class Light_Model {
     data['id'] = this.id;
     data['light'] = this.light;
     data['description'] = this.description;
+    data['warning'] = this.warning;
     data['created_at'] = this.createdAt;
-    data['updated_at'] = this.updatedAt;
     return data;
   }
 }
