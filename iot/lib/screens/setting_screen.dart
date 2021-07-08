@@ -1,8 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:iot/authentication/changePass.dart';
+import 'package:iot/authentication/update_ProfileUser.dart';
 import 'package:iot/network/shared_service.dart';
-import 'package:iot/setting/about.dart';
 
 class SettingScreen extends StatefulWidget {
   const SettingScreen({Key key}) : super(key: key);
@@ -46,7 +47,7 @@ class _SettingScreenState extends State<SettingScreen> {
           SizedBox(height: 15,),
           Container(
             margin: EdgeInsets.fromLTRB(0, 10, 0, 0),
-            height: 165,
+            height: 225,
             color: Colors.white,
             child: ListView(
               children: ListTile.divideTiles(
@@ -64,13 +65,30 @@ class _SettingScreenState extends State<SettingScreen> {
                       Navigator.of(context).push(
                         MaterialPageRoute(
                           builder: (context) =>
-                              About_Screen(),
+                              UpdateProfileUserPage(),
                         ),
                       );
                     },
                     child: ListTile(
                       title: Text(
-                        'Giới thiệu',
+                        'Cập nhật thông tin',
+                        style: TextStyle(color: Colors.black),
+                      ),
+                      trailing: Icon(Icons.chevron_right),
+                    ),
+                  ),
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) =>
+                              ChangePassPage(),
+                        ),
+                      );
+                    },
+                    child: ListTile(
+                      title: Text(
+                        'Đổi mật khẩu',
                         style: TextStyle(color: Colors.black),
                       ),
                       trailing: Icon(Icons.chevron_right),

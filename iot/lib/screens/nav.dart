@@ -8,6 +8,7 @@ class Nav extends StatefulWidget {
   @override
   _NavState createState() => _NavState();
 }
+
 class _NavState extends State<Nav> {
   int _currentIndex = 0;
 
@@ -21,13 +22,12 @@ class _NavState extends State<Nav> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(child: tabs[_currentIndex]),
-
       bottomNavigationBar: BottomNavyBar(
         selectedIndex: _currentIndex,
         showElevation: true,
         itemCornerRadius: 24,
         curve: Curves.easeIn,
-        onItemSelected: (index) => setState(() => _currentIndex = index),
+        onItemSelected: (index) => setState(()=>_currentIndex = index),
         items: <BottomNavyBarItem>[
           BottomNavyBarItem(
             icon: Icon(Icons.people),

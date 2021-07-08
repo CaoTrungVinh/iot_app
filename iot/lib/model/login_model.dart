@@ -36,7 +36,7 @@ class User {
   String email;
   String name;
   String birthday;
-  int phone;
+  String phone;
   String gender;
   String address;
   int roleId;

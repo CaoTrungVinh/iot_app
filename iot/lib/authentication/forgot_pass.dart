@@ -1,21 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:iot/network/request_login.dart';
 import 'package:iot/authentication/ProgressHUD.dart';
 import 'package:iot/authentication/form_helper.dart';
-import 'package:iot/network/request_login.dart';
 
-class LoginPage extends StatefulWidget {
-  const LoginPage({Key key}) : super(key: key);
+class ForgotPass extends StatefulWidget {
+  const ForgotPass({Key key}) : super(key: key);
 
   @override
-  _LoginPageState createState() => _LoginPageState();
+  ForgotPassrClass createState() => new ForgotPassrClass();
 }
 
-class _LoginPageState extends State<LoginPage> {
+class ForgotPassrClass extends State<ForgotPass> {
   final _scaffoldKey = GlobalKey<ScaffoldState>();
   static final GlobalKey<FormState> globalFromKey = GlobalKey<FormState>();
   String _email = "";
-  String _pwd = "";
-  bool hidePassword = true;
   bool isApiCallProcess = false;
 
   @override
@@ -24,25 +22,25 @@ class _LoginPageState extends State<LoginPage> {
         child: Scaffold(
       key: _scaffoldKey,
       body: ProgressHUD(
-        child: _loginUISetup(context),
+        child: ForgotPassUISetup(context),
         inAsyncCall: isApiCallProcess,
         opacity: 0.3,
       ),
     ));
   }
 
-  Widget _loginUISetup(BuildContext context) {
+  Widget ForgotPassUISetup(BuildContext context) {
     return new SingleChildScrollView(
       child: Container(
         child: Form(
           key: globalFromKey,
-          child: _loginUI(context),
+          child: _forgotPass(context),
         ),
       ),
     );
   }
 
-  Widget _loginUI(BuildContext context) {
+  Widget _forgotPass(BuildContext context) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -86,10 +84,19 @@ class _LoginPageState extends State<LoginPage> {
             ),
           ),
         ),
+        Center(
+          child: Padding(
+            padding: EdgeInsets.only(bottom: 0, top: 20),
+            child: Text(
+              'Hãy điền Email để được cấp mật khẩu mới!',
+              style: TextStyle(fontSize: 15, color: Colors.blue),
+            ),
+          ),
+        ),
         Padding(
-          padding: EdgeInsets.only(bottom: 20, top: 20),
+          padding: EdgeInsets.only(bottom: 0, top: 5),
           child: FormHelper.inputFielWidget(
-              context, Icon(Icons.person), "email", "Email", (onValidateVal) {
+              context, Icon(Icons.email), "email", "Email", (onValidateVal) {
             if (onValidateVal.isEmpty) {
               return 'Email không được để trống';
             } else if (!onValidateVal.contains("@") ||
@@ -101,90 +108,65 @@ class _LoginPageState extends State<LoginPage> {
             _email = onSavedVal.toString().trim();
           }),
         ),
-        Padding(
-          padding: EdgeInsets.only(bottom: 20),
-          child: FormHelper.inputFielWidget(
-              context, Icon(Icons.lock), "password", "Mật khẩu",
-              (onValidateVal) {
-                if (onValidateVal.isEmpty) {
-                  return "Mật khẩu không được rỗng!";
-                }
-                if(onValidateVal.length<8){
-                  return "Mật khẩu ít nhất 8 ký tự!";
-                }
-            return null;
-          }, (onSavedVal) {
-            _pwd = onSavedVal.toString().trim();
-          },
-              initialValue: "",
-              obscureText: hidePassword,
-              suffixIcon: IconButton(
-                onPressed: () {
-                  setState(() {
-                    hidePassword = !hidePassword;
-                  });
-                },
-                color: Colors.lightBlue.withOpacity(0.4),
-                icon: Icon(
-                    hidePassword ? Icons.visibility_off : Icons.visibility),
-              )),
-        ),
-        Padding(padding: EdgeInsets.only(bottom: 0),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              Padding(
-                padding: const EdgeInsets.only(right: 20.0),
-                child: new FlatButton(
-                  child: new Text(
-                    "Quên mật khẩu?",
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontStyle: FontStyle.italic,
-                      color: Colors.blue,
-                      fontSize: 15.0,
-                    ),
-                    textAlign: TextAlign.end,
-                  ),
-                  onPressed: () => {
-                    Navigator.of(context).pushReplacementNamed('/forgot')
-                  },
-                ),
-              ),
-            ],
-          ),
-
-        ),
         SizedBox(
           height: 20,
         ),
         Center(
-          child: FormHelper.saveButton("ĐĂNG NHẬP", () {
+          child: FormHelper.saveButton("GỬI MAIL", () {
+            print(_email);
             if (validateAndSave()) {
               print("Email: $_email");
-              print("Pass: $_pwd");
               setState(() {
                 this.isApiCallProcess = true;
               });
-              APIServices.loginCustomer(_email, _pwd).then((response) {
+              APIServices.forgotCustomer(_email).then((response) {
                 setState(() {
                   this.isApiCallProcess = false;
                 });
                 if (response) {
                   globalFromKey.currentState.reset();
-                  Navigator.of(context).pushReplacementNamed('/home');
-                  print("$response àd");
+                  FormHelper.showMessage(
+                      context,
+                      "Thành công!",
+                      "Vui lòng check mail để lấy mật khẩu đăng nhập.",
+                      "OK", () {
+                    Navigator.of(context).pop();
+                    Navigator.of(context).pushReplacementNamed('/login');
+                  });
                 } else {
                   print(response);
-                  FormHelper.showMessage(context, "Cảnh báo",
-                      "Email hoặc mật khẩu không đúng ", "Đồng ý", () {
+                  FormHelper.showMessage(
+                      context, "Thông báo", "Gửi mail thất bại!!! ", "Đồng ý",
+                      () {
                     Navigator.of(context).pop();
                   });
                 }
               });
             }
           }),
-        )
+        ),
+        Padding(
+          padding: EdgeInsets.only(top: 50),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              new FlatButton(
+                child: new Text(
+                  "Quay về Login",
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontStyle: FontStyle.italic,
+                    color: Colors.blue,
+                    fontSize: 15.0,
+                  ),
+                ),
+                onPressed: () =>
+                    {Navigator.of(context).pushReplacementNamed('/login')},
+                // ),
+              ),
+            ],
+          ),
+        ),
       ],
     );
   }
