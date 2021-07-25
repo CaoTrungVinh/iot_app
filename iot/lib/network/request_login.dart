@@ -7,7 +7,6 @@ import 'network.dart';
 class APIServices {
   static var client = http.Client();
 
-  // static String apiURL = "http://192.168.1.150/iot_server/iot/public/api/auth/login";
   static String apiURL = url + 'auth/login';
   static String apiURLForgot = url + 'auth/forgotPass';
   static String apiURLChangePass = url + 'auth/changePassword';

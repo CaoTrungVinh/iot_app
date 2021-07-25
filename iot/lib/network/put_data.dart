@@ -56,6 +56,19 @@ Future setPhWarning_OnOff(int warning) async {
   return response.data;
 }
 
+Future setLightWarning_OnOff(int warning) async {
+  final prefs = await SharedPreferences.getInstance();
+  int id_toolkit = prefs.getInt("id_light");
+  final String paturl = url + 'setWarningLight_onoff?id=' + '$id_toolkit';
+
+  dynamic data = {'warning': warning};
+  var response = await dio.put(paturl,
+      data: data,
+      options: Options(
+          headers: {'Content-type': 'application/json; charset=UTF-8'}));
+  return response.data;
+}
+
 Future setPumpIn_OnOff(int status) async {
   final prefs = await SharedPreferences.getInstance();
   int id_control = prefs.getInt("id_pump_in");

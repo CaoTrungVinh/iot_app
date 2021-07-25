@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:iot/authentication/ProgressHUD.dart';
 import 'package:iot/authentication/form_helper.dart';
+import 'package:iot/network/post_data.dart';
 import 'package:iot/network/request_login.dart';
 
 class LoginPage extends StatefulWidget {
@@ -166,13 +167,15 @@ class _LoginPageState extends State<LoginPage> {
               setState(() {
                 this.isApiCallProcess = true;
               });
-              APIServices.loginCustomer(_email, _pwd).then((response) {
+              APIServices.loginCustomer(_email, _pwd).then((response) async {
                 setState(() {
                   this.isApiCallProcess = false;
                 });
                 if (response) {
                   globalFromKey.currentState.reset();
+
                   Navigator.of(context).pushReplacementNamed('/home');
+
                   print("$response àd");
                 } else {
                   print(response);
