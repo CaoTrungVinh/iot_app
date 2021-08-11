@@ -7,6 +7,7 @@ class Control_Model {
   int idOxygenFan;
   String name;
   String address;
+  int active;
 
   Control_Model(
       {this.id,
@@ -16,7 +17,8 @@ class Control_Model {
         this.idLamp,
         this.idOxygenFan,
         this.name,
-        this.address});
+        this.address,
+        this.active});
 
   Control_Model.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -27,6 +29,7 @@ class Control_Model {
     idOxygenFan = json['id_oxygen_fan'];
     name = json['name'];
     address = json['address'];
+    active = json['active'];
   }
 
   Map<String, dynamic> toJson() {
@@ -39,6 +42,7 @@ class Control_Model {
     data['id_oxygen_fan'] = this.idOxygenFan;
     data['name'] = this.name;
     data['address'] = this.address;
+    data['active'] = this.active;
     return data;
   }
 }

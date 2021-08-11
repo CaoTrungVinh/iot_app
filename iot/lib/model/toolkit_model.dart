@@ -6,6 +6,7 @@ class Toolkit_Model {
   int idLight;
   String name;
   String address;
+  int active;
 
   Toolkit_Model(
       {this.id,
@@ -14,7 +15,8 @@ class Toolkit_Model {
         this.idPh,
         this.idLight,
         this.name,
-        this.address});
+        this.address,
+        this.active});
 
   Toolkit_Model.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -24,6 +26,7 @@ class Toolkit_Model {
     idLight = json['id_light'];
     name = json['name'];
     address = json['address'];
+    active = json['active'];
   }
 
   Map<String, dynamic> toJson() {
@@ -35,6 +38,7 @@ class Toolkit_Model {
     data['id_light'] = this.idLight;
     data['name'] = this.name;
     data['address'] = this.address;
+    data['active'] = this.active;
     return data;
   }
 }
