@@ -48,6 +48,9 @@ class _Ph_SensorState extends State<Ph_Sensor> {
       }
       setState(() {
         model_data = dataFromServer;
+        if (model_data[0].value == null){
+          model_data[0].value = 0;
+        }
       });
       isLoading = false;
     },

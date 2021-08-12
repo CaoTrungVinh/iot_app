@@ -477,7 +477,7 @@ class _PondScreenState extends State<PondScreen> {
           content: SingleChildScrollView(
             child: ListBody(
               children: <Widget>[
-                Text('str'),
+                Text(str),
               ],
             ),
           ),

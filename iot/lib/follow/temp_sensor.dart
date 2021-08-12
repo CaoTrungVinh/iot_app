@@ -48,6 +48,9 @@ class _Temp_SensorState extends State<Temp_Sensor> {
         }
         setState(() {
           model_data = dataFromServer;
+          if (model_data[0].temperature == null){
+            model_data[0].temperature = 0;
+          }
         });
         isLoading = false;
       },
