@@ -33,6 +33,35 @@
           ]
         }
       }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:572906548859:android:3374a23d93574319ba7cde",
+        "android_client_info": {
+          "package_name": "com.ponder.iot"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "572906548859-tsjfmug148fec09rdi10epatrjcntltg.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA-OKcL1zR6nQQ6bv01JkEOP638vG2dxKg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "572906548859-tsjfmug148fec09rdi10epatrjcntltg.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
     }
   ],
   "configuration_version": "1"
