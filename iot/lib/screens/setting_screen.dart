@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:iot/authentication/changePass.dart';
 import 'package:iot/authentication/update_ProfileUser.dart';
 import 'package:iot/network/shared_service.dart';
+import 'package:iot/screens/dieukhoan.dart';
 
 class SettingScreen extends StatefulWidget {
   const SettingScreen({Key key}) : super(key: key);
@@ -38,13 +39,17 @@ class _SettingScreenState extends State<SettingScreen> {
       margin: EdgeInsets.fromLTRB(5.0, 0.0, 0.0, 0.0),
       child: ListView(
         children: [
-          SizedBox(height: 15,),
+          SizedBox(
+            height: 15,
+          ),
           Image(
             image: AssetImage('assets/images/logo.png'),
             width: 160,
             height: 160,
           ),
-          SizedBox(height: 15,),
+          SizedBox(
+            height: 15,
+          ),
           Container(
             margin: EdgeInsets.fromLTRB(0, 10, 0, 0),
             height: 225,
@@ -53,19 +58,27 @@ class _SettingScreenState extends State<SettingScreen> {
               children: ListTile.divideTiles(
                 context: context,
                 tiles: [
-                  ListTile(
-                    title: Text(
-                      'Điều khoản và sử dụng',
-                      style: TextStyle(color: Colors.black),
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) => DieuKhoan(),
+                        ),
+                      );
+                    },
+                    child: ListTile(
+                      title: Text(
+                        'Điều khoản và sử dụng',
+                        style: TextStyle(color: Colors.black),
+                      ),
+                      trailing: Icon(Icons.chevron_right),
                     ),
-                    trailing: Icon(Icons.chevron_right),
                   ),
                   GestureDetector(
                     onTap: () {
                       Navigator.of(context).push(
                         MaterialPageRoute(
-                          builder: (context) =>
-                              UpdateProfileUserPage(),
+                          builder: (context) => UpdateProfileUserPage(),
                         ),
                       );
                     },
@@ -81,8 +94,7 @@ class _SettingScreenState extends State<SettingScreen> {
                     onTap: () {
                       Navigator.of(context).push(
                         MaterialPageRoute(
-                          builder: (context) =>
-                              ChangePassPage(),
+                          builder: (context) => ChangePassPage(),
                         ),
                       );
                     },
@@ -96,7 +108,7 @@ class _SettingScreenState extends State<SettingScreen> {
                   ),
                   GestureDetector(
                     onTap: () {
-                          _showDialogExit(context);
+                      _showDialogExit(context);
                     },
                     child: ListTile(
                       title: Text(
@@ -133,6 +145,7 @@ class _SettingScreenState extends State<SettingScreen> {
       ),
     );
   }
+
   _showDialogExit(BuildContext context) {
     return showDialog(
       context: context,
