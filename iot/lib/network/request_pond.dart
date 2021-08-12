@@ -17,6 +17,7 @@ class Request_Pond {
   static Future<List<Pond_Model>> fetchPond() async {
     final prefs = await SharedPreferences.getInstance();
     int id_user = prefs.getInt("id_user");
+    print(id_user);
     final String urls = url + 'pond?user=' + '$id_user';
     // final String urls = url + 'pond?user=4';
 

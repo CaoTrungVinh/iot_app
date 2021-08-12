@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:iot/model/light_model.dart';
+import 'package:iot/network/put_data.dart';
 import 'package:iot/network/request_light.dart';
 
 class Light_Sensor extends StatefulWidget {
@@ -15,6 +16,29 @@ class _Light_SensorState extends State<Light_Sensor> {
   int light = 0;
   bool isLoading = false;
   Timer _timer;
+
+  bool isSwitched = false;
+  int set_warning;
+
+  void toggleSwitch(bool value) {
+    if (isSwitched == false) {
+      setState(() {
+        isSwitched = true;
+        set_warning = 1;
+        setLightWarning_OnOff(set_warning).then((value) {
+        });
+      });
+      print('Switch Button is ON');
+    } else {
+      setState(() {
+        isSwitched = false;
+        set_warning = 0;
+        setLightWarning_OnOff(set_warning).then((value) {
+        });
+      });
+      print('Switch Button is OFF');
+    }
+  }
 
   void startTimer() {
     _timer = new Timer.periodic(const Duration(seconds: 2), (timer) {
@@ -47,6 +71,11 @@ class _Light_SensorState extends State<Light_Sensor> {
         }
         setState(() {
           model_data = value;
+          if (model_data[0].warning == 1){
+            isSwitched = true;
+          }else if (model_data[0].warning == 0){
+            isSwitched = false;
+          }
         });
         isLoading = false;
       },
@@ -85,12 +114,24 @@ class _Light_SensorState extends State<Light_Sensor> {
                               Container(
                                 height: 30,
                                 child: Text(
-                                  'Buổi sáng',
+                                  'Cảnh báo ao trời tối',
                                   style: TextStyle(
                                       color: Colors.grey,
                                       fontWeight: FontWeight.bold,
                                       fontSize: 16),
                                 ),
+                              ),
+                              Container(
+                                child: Transform.scale(
+                                    scale: 1.2,
+                                    child: Switch(
+                                      onChanged: toggleSwitch,
+                                      value: isSwitched,
+                                      activeColor: Colors.blue,
+                                      activeTrackColor: Colors.lightBlue,
+                                      inactiveThumbColor: Colors.grey,
+                                      inactiveTrackColor: Colors.grey[300],
+                                    )),
                               ),
                             ],
                           ),
@@ -109,12 +150,24 @@ class _Light_SensorState extends State<Light_Sensor> {
                               Container(
                                 height: 30,
                                 child: Text(
-                                  'Buổi tối',
+                                  'Cảnh báo ao trời tối',
                                   style: TextStyle(
                                       color: Colors.grey,
                                       fontWeight: FontWeight.bold,
                                       fontSize: 16),
                                 ),
+                              ),
+                              Container(
+                                child: Transform.scale(
+                                    scale: 1.2,
+                                    child: Switch(
+                                      onChanged: toggleSwitch,
+                                      value: isSwitched,
+                                      activeColor: Colors.blue,
+                                      activeTrackColor: Colors.lightBlue,
+                                      inactiveThumbColor: Colors.grey,
+                                      inactiveTrackColor: Colors.grey[300],
+                                    )),
                               ),
                             ],
                           ),

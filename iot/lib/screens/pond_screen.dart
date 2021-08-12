@@ -90,24 +90,30 @@ class _PondScreenState extends State<PondScreen> {
                                   return InkWell(
                                     onTap: () {
                                       setState(() {
-                                        pond_id = pond_data[index].id;
-                                        pond_string =
-                                            '${pond_data[index].name}';
-                                        Request_Toolkit.fetchToolkit(pond_id)
-                                            .then((data) {
-                                          setState(() {
-                                            toolkit_data = data;
-                                            print(toolkit_data.length);
-                                          });
-                                        });
+                                        if (pond_data[index].active == 1) {
+                                          pond_id = pond_data[index].id;
+                                          pond_string =
+                                              '${pond_data[index].name}';
 
-                                        Request_Control.fetchControl(pond_id)
-                                            .then((data) {
-                                          setState(() {
-                                            control_data = data;
-                                            print(control_data.length);
+                                          Request_Toolkit.fetchToolkit(pond_id)
+                                              .then((data) {
+                                            setState(() {
+                                              toolkit_data = data;
+                                              print(toolkit_data.length);
+                                            });
                                           });
-                                        });
+
+                                          Request_Control.fetchControl(pond_id)
+                                              .then((data) {
+                                            setState(() {
+                                              control_data = data;
+                                              print(control_data.length);
+                                            });
+                                          });
+                                        } else {
+                                          _showErro(
+                                              "Ao nuôi này hiện không hoạt động");
+                                        }
                                       });
                                       print('ao nuôi số: ' + '$pond_id');
                                       print('ao nuôi số: ' + pond_string);
@@ -206,27 +212,61 @@ class _PondScreenState extends State<PondScreen> {
                                 return InkWell(
                                   onTap: () {
                                     setState(() {
-                                      if (toolkit_data[index].idTemperature !=
-                                              null &&
-                                          toolkit_data[index].idPh != null &&
-                                          toolkit_data[index].idLight != null) {
-                                        SharedService.setToolkit(
-                                            toolkit_data[index].idTemperature,
-                                            toolkit_data[index].idPh,
-                                            toolkit_data[index].idLight);
-                                      } else if (toolkit_data[index]
-                                                  .idTemperature ==
-                                              null &&
-                                          toolkit_data[index].idPh == null &&
-                                          toolkit_data[index].idLight == null) {
-                                        SharedService.setToolkit(0, 0, 0);
-                                      }
+                                      int temp =
+                                          toolkit_data[index].idTemperature;
+                                      int phs = toolkit_data[index].idPh;
+                                      int lights = toolkit_data[index].idLight;
 
-                                      Navigator.of(context).push(
-                                        MaterialPageRoute(
-                                          builder: (context) => SensorsScreen(),
-                                        ),
-                                      );
+                                      if (toolkit_data[index].active == 1) {
+                                        if (temp != null &&
+                                            phs != null &&
+                                            lights != null) {
+                                          SharedService.setToolkit(
+                                              temp, phs, lights);
+                                        } else if (temp == null &&
+                                            phs == null &&
+                                            lights == null) {
+                                          SharedService.setToolkit(0, 0, 0);
+                                        } else if (temp == null &&
+                                            phs != null &&
+                                            lights != null) {
+                                          SharedService.setToolkit(
+                                              0, phs, lights);
+                                        } else if (temp != null &&
+                                            phs == null &&
+                                            lights != null) {
+                                          SharedService.setToolkit(
+                                              temp, 0, lights);
+                                        } else if (temp != null &&
+                                            phs != null &&
+                                            lights == null) {
+                                          SharedService.setToolkit(
+                                              temp, phs, 0);
+                                        } else if (temp == null &&
+                                            phs == null &&
+                                            lights != null) {
+                                          SharedService.setToolkit(
+                                              0, 0, lights);
+                                        } else if (temp == null &&
+                                            phs != null &&
+                                            lights == null) {
+                                          SharedService.setToolkit(0, phs, 0);
+                                        } else if (temp != null &&
+                                            phs == null &&
+                                            lights == null) {
+                                          SharedService.setToolkit(temp, 0, 0);
+                                        }
+
+                                        Navigator.of(context).push(
+                                          MaterialPageRoute(
+                                            builder: (context) =>
+                                                SensorsScreen(),
+                                          ),
+                                        );
+                                      } else {
+                                        _showErro(
+                                            "Bộ đo hiện tại không hoạt động");
+                                      }
                                     });
                                   },
                                   child: Card(
@@ -298,32 +338,95 @@ class _PondScreenState extends State<PondScreen> {
                                 return InkWell(
                                   onTap: () {
                                     setState(() {
-                                      if (control_data[index].idPumpIn !=
-                                              null &&
-                                          control_data[index].idPumpOut !=
-                                              null &&
-                                          control_data[index].idLamp != null &&
-                                          control_data[index].idOxygenFan !=
-                                              null) {
-                                        SharedService.setControl(
-                                            control_data[index].idPumpIn,
-                                            control_data[index].idPumpOut,
-                                            control_data[index].idLamp,
-                                            control_data[index].idOxygenFan);
-                                      } else if (control_data[index].idPumpIn ==
-                                              null ||
-                                          control_data[index].idPumpOut ==
-                                              null ||
-                                          control_data[index].idLamp == null ||
-                                          control_data[index].idOxygenFan ==
-                                              null) {
-                                        SharedService.setControl(0, 0, 0, 0);
+                                      int bom = control_data[index].idPumpIn;
+                                      int xa = control_data[index].idPumpOut;
+                                      int den = control_data[index].idLamp;
+                                      int quat =
+                                          control_data[index].idOxygenFan;
+
+                                      if (control_data[index].active == 1) {
+                                        if (bom != null &&
+                                            xa != null &&
+                                            den != null &&
+                                            quat != null) {
+                                          SharedService.setControl(
+                                              bom, xa, den, quat);
+                                        } else if (bom == null &&
+                                            xa == null &&
+                                            den == null &&
+                                            quat == null) {
+                                          SharedService.setControl(0, 0, 0, 0);
+                                        } else if (bom == null &&
+                                            xa != null &&
+                                            den != null &&
+                                            quat != null) {
+                                          SharedService.setControl(
+                                              0, xa, den, quat);
+                                        } else if (bom != null &&
+                                            xa == null &&
+                                            den != null &&
+                                            quat != null) {
+                                          SharedService.setControl(
+                                              bom, 0, den, quat);
+                                        } else if (bom != null &&
+                                            xa != null &&
+                                            den == null &&
+                                            quat != null) {
+                                          SharedService.setControl(
+                                              bom, xa, 0, quat);
+                                        } else if (bom != null &&
+                                            xa != null &&
+                                            den != null &&
+                                            quat == null) {
+                                          SharedService.setControl(
+                                              bom, xa, den, 0);
+                                        } else if (bom == null &&
+                                            xa == null &&
+                                            den != null &&
+                                            quat != null) {
+                                          SharedService.setControl(
+                                              0, 0, den, quat);
+                                        } else if (bom == null &&
+                                            xa != null &&
+                                            den == null &&
+                                            quat != null) {
+                                          SharedService.setControl(
+                                              0, xa, 0, quat);
+                                        } else if (bom == null &&
+                                            xa != null &&
+                                            den != null &&
+                                            quat == null) {
+                                          SharedService.setControl(
+                                              0, xa, den, 0);
+                                        } else if (bom != null &&
+                                            xa == null &&
+                                            den == null &&
+                                            quat != null) {
+                                          SharedService.setControl(
+                                              bom, 0, 0, quat);
+                                        } else if (bom != null &&
+                                            xa == null &&
+                                            den != null &&
+                                            quat == null) {
+                                          SharedService.setControl(
+                                              bom, 0, den, 0);
+                                        } else if (bom != null &&
+                                            xa != null &&
+                                            den == null &&
+                                            quat == null) {
+                                          SharedService.setControl(
+                                              bom, xa, 0, 0);
+                                        }
+                                        Navigator.of(context).push(
+                                          MaterialPageRoute(
+                                            builder: (context) =>
+                                                DeviceScreen(),
+                                          ),
+                                        );
+                                      } else {
+                                        _showErro(
+                                            "Bộ điều khiển hiện không hoạt động");
                                       }
-                                      Navigator.of(context).push(
-                                        MaterialPageRoute(
-                                          builder: (context) => DeviceScreen(),
-                                        ),
-                                      );
                                     });
                                   },
                                   child: Card(
@@ -363,5 +466,31 @@ class _PondScreenState extends State<PondScreen> {
               ],
             ),
           );
+  }
+
+  _showErro(String str) {
+    return showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Thông báo'),
+          content: SingleChildScrollView(
+            child: ListBody(
+              children: <Widget>[
+                Text(str),
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            FlatButton(
+              child: Text('Đồng ý'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
   }
 }
