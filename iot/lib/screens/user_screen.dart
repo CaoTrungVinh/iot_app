@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:iot/model/utils.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -14,7 +15,7 @@ class UserScreeen extends StatefulWidget {
 class UserClass extends State<UserScreeen> {
   final String title = 'Url Launcher';
   String name = "", email = "", birthday = "", gender = "", address = "";
-  int phone = 0;
+  String phone = "0";
 
   @override
   void initState() {
@@ -32,7 +33,7 @@ class UserClass extends State<UserScreeen> {
         birthday = prefs.getString("birthday");
         gender = prefs.getString("gender");
         address = prefs.getString("address");
-        phone = prefs.getInt("phone");
+        phone = prefs.getString("phone");
         print(name);
       });
     } catch (error) {}
@@ -58,7 +59,7 @@ class UserClass extends State<UserScreeen> {
               Container(
                 margin: EdgeInsets.fromLTRB(30.0, 25.0, 0.0, 0.0),
                 child: Text(
-                  "HỆ THỐNG QUẢN LÝ AO NUÔI",
+                  "GIÁM SÁT AO NUÔI",
                   style: TextStyle(
                       color: Colors.white,
                       fontSize: 25,

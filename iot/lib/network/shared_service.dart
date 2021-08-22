@@ -20,7 +20,7 @@ class SharedService {
       prefs.setInt("id_user", responseModel.user.id);
       prefs.setString("email", responseModel.user.email);
       prefs.setString("name", responseModel.user.name);
-      prefs.setInt("phone", int.parse(responseModel.user.phone));
+      prefs.setString("phone", responseModel.user.phone);
       prefs.setString("birthday", responseModel.user.birthday);
       prefs.setString("gender", responseModel.user.gender);
       prefs.setString("address", responseModel.user.address);

@@ -82,7 +82,7 @@ class _LoginPageState extends State<LoginPage> {
           child: Padding(
             padding: EdgeInsets.only(bottom: 20, top: 40),
             child: Text(
-              'HỆ THỐNG QUẢN LÝ AO NUÔI',
+              'HỆ THỐNG GIÁM SÁT AO NUÔI',
               style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
             ),
           ),

@@ -16,7 +16,7 @@ class UpdateProfileUserClass extends State<UpdateProfileUserPage> {
   static final GlobalKey<FormState> globalFromKey = GlobalKey<FormState>();
   String name = "", birthday = "", gender = "", address = "";
   String up_name = "", up_birthday = "", up_gender = "", up_address = "", up_phone = "";
-  int phone = 0;
+  String phone = "0";
 
 
   @override
@@ -34,12 +34,12 @@ class UpdateProfileUserClass extends State<UpdateProfileUserPage> {
         birthday = prefs.getString("birthday");
         gender = prefs.getString("gender");
         address = prefs.getString("address");
-        phone = prefs.getInt("phone");
+        phone = prefs.getString("phone");
         up_name = name;
         up_birthday = birthday;
         up_gender = gender;
         up_address = address;
-        up_phone = phone.toString();
+        up_phone = phone;
         print(name);
       });
     } catch (error) {}
@@ -221,13 +221,15 @@ class UpdateProfileUserClass extends State<UpdateProfileUserPage> {
                                 child: new TextFormField(
                                   textAlign: TextAlign.left,
                                   onChanged: (text) {
+                                    text = name;
                                     if (text.isEmpty) {
                                       up_name = name;
                                     } else {
                                       up_name = text;
                                     }
                                   },
-                                  decoration: InputDecoration(hintText: name),
+                                  decoration: InputDecoration(labelText: name),
+
                                 ),
                               ),
                               flex: 2,
@@ -244,7 +246,7 @@ class UpdateProfileUserClass extends State<UpdateProfileUserPage> {
                                     up_gender = text;
                                   }
                                 },
-                                decoration: InputDecoration(hintText: gender),
+                                decoration: InputDecoration(labelText: gender),
                                 // enabled: _status== false,
                               ),
                               flex: 2,
@@ -307,7 +309,7 @@ class UpdateProfileUserClass extends State<UpdateProfileUserPage> {
                                 },
                                 // controller:
                                 // profileController.id_controller,
-                                decoration: InputDecoration(hintText: birthday),
+                                decoration: InputDecoration(labelText: birthday),
                                 // enabled: _status == false,
                               ),
                             ),
@@ -319,12 +321,12 @@ class UpdateProfileUserClass extends State<UpdateProfileUserPage> {
                               // profileController.phone_controller,
                               onChanged: (text) {
                                 if (text.isEmpty) {
-                                  up_phone = phone.toString();
+                                  up_phone = phone;
                                 } else {
                                   up_phone = text;
                                 }
                               },
-                              decoration: InputDecoration(hintText: '${phone}'),
+                              decoration: InputDecoration(labelText: phone),
                               keyboardType: TextInputType.number,
                             ),
                             flex: 2,
@@ -413,7 +415,7 @@ class UpdateProfileUserClass extends State<UpdateProfileUserPage> {
                                 },
                                 // controller: profileController
                                 //     .adress_controller,
-                                decoration: InputDecoration(hintText: address),
+                                decoration: InputDecoration(labelText: address),
                               ),
                             ),
                           ],
@@ -427,7 +429,7 @@ class UpdateProfileUserClass extends State<UpdateProfileUserPage> {
                           textColor: Colors.white,
                           color: Colors.blue,
                           onPressed: () {
-                            print(up_name + "," + "${up_phone}");
+                            print(up_name + "," + up_phone);
                             if (formKey.currentState.validate()) {
                               // formKey.currentState.validate();
                               return showDialog(
