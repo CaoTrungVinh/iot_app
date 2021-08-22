@@ -58,7 +58,7 @@ class UserClass extends State<UserScreeen> {
               Container(
                 margin: EdgeInsets.fromLTRB(30.0, 25.0, 0.0, 0.0),
                 child: Text(
-                  "HỆ THỐNG NUÔI CÁ CV",
+                  "HỆ THỐNG QUẢN LÝ AO NUÔI",
                   style: TextStyle(
                       color: Colors.white,
                       fontSize: 25,
@@ -137,7 +137,7 @@ class UserClass extends State<UserScreeen> {
                           textColor: Colors.white,
                           onPressed: () {
                             Utils.openEmail(
-                              toEmail: 'example@gmail.com',
+                              toEmail: 'vinhtrungcao1999@gmail.com',
                               subject: 'Hello World',
                               body: 'This works great!',
                             );
