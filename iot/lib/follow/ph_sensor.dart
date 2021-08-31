@@ -68,12 +68,13 @@ class _Ph_SensorState extends State<Ph_Sensor> {
         : Container(
       margin: EdgeInsets.fromLTRB(0.0, 15.0, 0.0, 0.0),
       width: 160.0,
-      height: 170.0,
+      height: 200.0,
       decoration: BoxDecoration(
         borderRadius: const BorderRadius.all(const Radius.circular(15.0)),
         color: Colors.white,
       ),
       child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
           Container(
             child: Stack(
@@ -177,6 +178,7 @@ class _Ph_SensorState extends State<Ph_Sensor> {
               ],
             ),
           ),
+          model_data[0].createdAt.isEmpty ? Text("") : Text(model_data[0].createdAt),
         ],
       ),
     );

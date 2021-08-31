@@ -71,36 +71,42 @@ class _Temp_SensorState extends State<Temp_Sensor> {
               borderRadius: const BorderRadius.all(const Radius.circular(15.0)),
               color: Colors.white,
             ),
-            height: 170.0,
+            height: 200.0,
             padding: const EdgeInsets.all(10.0),
-            child: Container(
-              height: 140.0,
-              width: 140.0,
-              child: CircularPercentIndicator(
-                radius: 135.0,
-                lineWidth: 13.0,
-                animation: true,
-                percent: model_data[0].temperature / 100,
-                center: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    new Text(
-                      "Nhiệt độ",
-                      style: new TextStyle(
-                          fontSize: 16.0,
-                          fontWeight: FontWeight.normal,
-                          color: Colors.grey),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                Container(
+                  height: 150.0,
+                  width: 140.0,
+                  child: CircularPercentIndicator(
+                    radius: 135.0,
+                    lineWidth: 13.0,
+                    animation: true,
+                    percent: model_data[0].temperature / 100,
+                    center: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        new Text(
+                          "Nhiệt độ",
+                          style: new TextStyle(
+                              fontSize: 16.0,
+                              fontWeight: FontWeight.normal,
+                              color: Colors.grey),
+                        ),
+                        new Text(
+                          model_data[0].temperature.toString(),
+                          style: new TextStyle(
+                              fontWeight: FontWeight.bold, fontSize: 30.0),
+                        ),
+                      ],
                     ),
-                    new Text(
-                      model_data[0].temperature.toString(),
-                      style: new TextStyle(
-                          fontWeight: FontWeight.bold, fontSize: 30.0),
-                    ),
-                  ],
+                    circularStrokeCap: CircularStrokeCap.round,
+                    progressColor: Colors.redAccent,
+                  ),
                 ),
-                circularStrokeCap: CircularStrokeCap.round,
-                progressColor: Colors.redAccent,
-              ),
+                model_data[0].createdAt.isEmpty ? Text("") : Text(model_data[0].createdAt),
+              ],
             ),
           );
   }

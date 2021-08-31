@@ -151,7 +151,7 @@ class _SettingScreenState extends State<SettingScreen> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('CV cảnh báo'),
+          title: Text('Cảnh báo'),
           content: SingleChildScrollView(
             child: ListBody(
               children: <Widget>[
@@ -183,7 +183,7 @@ class _SettingScreenState extends State<SettingScreen> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('CV cảnh báo'),
+          title: Text('Cảnh báo'),
           content: SingleChildScrollView(
             child: ListBody(
               children: <Widget>[
