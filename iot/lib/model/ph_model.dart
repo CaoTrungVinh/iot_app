@@ -4,6 +4,7 @@ class PH_Model {
   double phMin;
   double phMax;
   int warning;
+  int auto_control;
   String createdAt;
 
   PH_Model(
@@ -12,6 +13,7 @@ class PH_Model {
         this.phMin,
         this.phMax,
         this.warning,
+        this.auto_control,
         this.createdAt});
 
   PH_Model.fromJson(Map<String, dynamic> json) {
@@ -20,6 +22,7 @@ class PH_Model {
     phMin = double.tryParse(json['ph_min'].toString());
     phMax = double.tryParse(json['ph_max'].toString());
     warning = json['warning'];
+    auto_control = json['auto_control'];
     createdAt = json['created_at'];
   }
 
@@ -30,6 +33,7 @@ class PH_Model {
     data['ph_min'] = this.phMin;
     data['ph_max'] = this.phMax;
     data['warning'] = this.warning;
+    data['auto_control'] = this.auto_control;
     data['created_at'] = this.createdAt;
     return data;
   }

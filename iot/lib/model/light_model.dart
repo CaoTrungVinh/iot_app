@@ -3,6 +3,7 @@ class Light_Model {
   int light;
   String description;
   int warning;
+  int auto_control;
   String createdAt;
 
   Light_Model(
@@ -10,6 +11,7 @@ class Light_Model {
         this.light,
         this.description,
         this.warning,
+        this.auto_control,
         this.createdAt});
 
   Light_Model.fromJson(Map<String, dynamic> json) {
@@ -17,6 +19,7 @@ class Light_Model {
     light = json['light'];
     description = json['description'];
     warning = json['warning'];
+    auto_control = json['auto_control'];
     createdAt = json['created_at'];
   }
 
@@ -26,6 +29,7 @@ class Light_Model {
     data['light'] = this.light;
     data['description'] = this.description;
     data['warning'] = this.warning;
+    data['auto_control'] = this.auto_control;
     data['created_at'] = this.createdAt;
     return data;
   }

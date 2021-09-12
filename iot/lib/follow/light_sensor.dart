@@ -18,6 +18,7 @@ class _Light_SensorState extends State<Light_Sensor> {
   Timer _timer;
 
   bool isSwitched = false;
+  bool Switched = false;
   int set_warning;
 
   void toggleSwitch(bool value) {
@@ -25,18 +26,33 @@ class _Light_SensorState extends State<Light_Sensor> {
       setState(() {
         isSwitched = true;
         set_warning = 1;
-        setLightWarning_OnOff(set_warning).then((value) {
-        });
+        setLightWarning_OnOff(set_warning).then((value) {});
       });
       print('Switch Button is ON');
     } else {
       setState(() {
         isSwitched = false;
         set_warning = 0;
-        setLightWarning_OnOff(set_warning).then((value) {
-        });
+        setLightWarning_OnOff(set_warning).then((value) {});
       });
       print('Switch Button is OFF');
+    }
+  }
+  void toggle(bool value) {
+    if (Switched == false) {
+      setState(() {
+        Switched = true;
+        setAutoLight(model_data[0].id, 1).then((value) {
+        });
+      });
+      print('Button is ON');
+    } else {
+      setState(() {
+        Switched = false;
+        setAutoLight(model_data[0].id, 0).then((value) {
+        });
+      });
+      print('Button is OFF');
     }
   }
 
@@ -71,10 +87,15 @@ class _Light_SensorState extends State<Light_Sensor> {
         }
         setState(() {
           model_data = value;
-          if (model_data[0].warning == 1){
+          if (model_data[0].warning == 1) {
             isSwitched = true;
-          }else if (model_data[0].warning == 0){
+          } else if (model_data[0].warning == 0) {
             isSwitched = false;
+          }
+          if (model_data[0].auto_control == 1) {
+            Switched = true;
+          } else if (model_data[0].auto_control != 1) {
+            Switched = false;
           }
         });
         isLoading = false;
@@ -104,15 +125,40 @@ class _Light_SensorState extends State<Light_Sensor> {
                     ? new Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
-                          Image(
-                            image: AssetImage('assets/images/sun.png'),
-                            width: 120,
-                            height: 120,
+                          Column(
+                            children: [
+                              Image(
+                                image: AssetImage('assets/images/sun.png'),
+                                width: 100,
+                                height: 100,
+                              ),
+                              Container(
+                                child: Column(
+                                  children: [
+                                    Text(
+                                      'Tự động bật đèn',
+                                      style: TextStyle(
+                                          color: Colors.grey,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                    Transform.scale(
+                                        scale: 1.2,
+                                        child: Switch(
+                                          onChanged: toggle,
+                                          value: Switched,
+                                          activeColor: Colors.blue,
+                                          activeTrackColor: Colors.lightBlue,
+                                          inactiveThumbColor: Colors.grey,
+                                          inactiveTrackColor: Colors.grey[300],
+                                        ))
+                                  ],
+                                ),
+                              ),
+                            ],
                           ),
                           Column(
                             children: [
                               Container(
-                                height: 30,
                                 child: Text(
                                   'Cảnh báo ao trời tối',
                                   style: TextStyle(
@@ -141,15 +187,40 @@ class _Light_SensorState extends State<Light_Sensor> {
                     : new Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
-                          Image(
-                            image: AssetImage('assets/images/moon.png'),
-                            width: 120,
-                            height: 120,
+                          Column(
+                            children: [
+                              Image(
+                                image: AssetImage('assets/images/moon.png'),
+                                width: 100,
+                                height: 100,
+                              ),
+                              Container(
+                                child: Column(
+                                  children: [
+                                    Text(
+                                      'Tự động bật đèn',
+                                      style: TextStyle(
+                                          color: Colors.grey,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                    Transform.scale(
+                                        scale: 1.2,
+                                        child: Switch(
+                                          onChanged: toggle,
+                                          value: Switched,
+                                          activeColor: Colors.blue,
+                                          activeTrackColor: Colors.lightBlue,
+                                          inactiveThumbColor: Colors.grey,
+                                          inactiveTrackColor: Colors.grey[300],
+                                        ))
+                                  ],
+                                ),
+                              ),
+                            ],
                           ),
                           Column(
                             children: [
                               Container(
-                                height: 30,
                                 child: Text(
                                   'Cảnh báo ao trời tối',
                                   style: TextStyle(
@@ -158,18 +229,17 @@ class _Light_SensorState extends State<Light_Sensor> {
                                       fontSize: 16),
                                 ),
                               ),
-                              Container(
-                                child: Transform.scale(
-                                    scale: 1.2,
-                                    child: Switch(
-                                      onChanged: toggleSwitch,
-                                      value: isSwitched,
-                                      activeColor: Colors.blue,
-                                      activeTrackColor: Colors.lightBlue,
-                                      inactiveThumbColor: Colors.grey,
-                                      inactiveTrackColor: Colors.grey[300],
-                                    )),
-                              ),
+                              Transform.scale(
+                                  scale: 1.2,
+                                  child: Switch(
+                                    onChanged: toggleSwitch,
+                                    value: isSwitched,
+                                    activeColor: Colors.blue,
+                                    activeTrackColor: Colors.lightBlue,
+                                    inactiveThumbColor: Colors.grey,
+                                    inactiveTrackColor: Colors.grey[300],
+                                  )),
+                              Text(model_data[0].createdAt),
                             ],
                           ),
                         ],

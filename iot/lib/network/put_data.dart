@@ -4,6 +4,40 @@ import 'network.dart';
 
 Dio dio = new Dio();
 
+Future setAutoTemp(int id, int auto_control) async {
+  final prefs = await SharedPreferences.getInstance();
+  final String paturl = url + 'setAutoTemp?id=' + '$id';
+
+  dynamic data = {'auto_control': auto_control};
+  var response = await dio.put(paturl,
+      data: data,
+      options: Options(
+          headers: {'Content-type': 'application/json; charset=UTF-8'}));
+  return response.data;
+}
+Future setAutoPh(int id, int auto_control) async {
+  final prefs = await SharedPreferences.getInstance();
+  final String paturl = url + 'setAutoPh?id=' + '$id';
+
+  dynamic data = {'auto_control': auto_control};
+  var response = await dio.put(paturl,
+      data: data,
+      options: Options(
+          headers: {'Content-type': 'application/json; charset=UTF-8'}));
+  return response.data;
+}
+Future setAutoLight(int id, int auto_control) async {
+  final prefs = await SharedPreferences.getInstance();
+  final String paturl = url + 'setAutoLight?id=' + '$id';
+
+  dynamic data = {'auto_control': auto_control};
+  var response = await dio.put(paturl,
+      data: data,
+      options: Options(
+          headers: {'Content-type': 'application/json; charset=UTF-8'}));
+  return response.data;
+}
+
 Future setTempWarning(double min, double max) async {
   final prefs = await SharedPreferences.getInstance();
   int id_toolkit = prefs.getInt("id_temp");

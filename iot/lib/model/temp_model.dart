@@ -4,6 +4,7 @@ class Temp_Model {
   int temperatureMin;
   int temperatureMax;
   int warning;
+  int auto_control;
   String createdAt;
 
   Temp_Model(
@@ -12,6 +13,7 @@ class Temp_Model {
         this.temperatureMin,
         this.temperatureMax,
         this.warning,
+        this.auto_control,
         this.createdAt});
 
   Temp_Model.fromJson(Map<String, dynamic> json) {
@@ -20,6 +22,7 @@ class Temp_Model {
     temperatureMin = json['temperature_min'];
     temperatureMax = json['temperature_max'];
     warning = json['warning'];
+    auto_control = json['auto_control'];
     createdAt = json['created_at'];
   }
 
@@ -30,6 +33,7 @@ class Temp_Model {
     data['temperature_min'] = this.temperatureMin;
     data['temperature_max'] = this.temperatureMax;
     data['warning'] = this.warning;
+    data['auto_control'] = this.auto_control;
     data['created_at'] = this.createdAt;
     return data;
   }
