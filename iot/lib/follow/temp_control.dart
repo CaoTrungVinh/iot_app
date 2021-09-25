@@ -73,7 +73,7 @@ class _Temp_ControlState extends State<Temp_Control> {
             child: Column(
               children: [
                 Text(
-                  'Tự động bơm xả nước',
+                  'Tự động quạt oxy',
                   style: TextStyle(
                       color: Colors.grey, fontWeight: FontWeight.bold),
                 ),

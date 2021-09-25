@@ -137,7 +137,7 @@ class _Temp_SensorState extends State<Temp_Sensor> {
                   child: Column(
                     children: [
                       Text(
-                        'Tự động bơm xả nước',
+                        'Tự động bật quạt oxy',
                         style: TextStyle(
                             color: Colors.grey, fontWeight: FontWeight.bold),
                       ),

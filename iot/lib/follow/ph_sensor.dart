@@ -209,7 +209,7 @@ class _Ph_SensorState extends State<Ph_Sensor> {
             child: Column(
               children: [
                 Text(
-                  'Tự động bật quạt oxy',
+                  'Tự động bơm xả nước',
                   style: TextStyle(
                       color: Colors.grey, fontWeight: FontWeight.bold),
                 ),
